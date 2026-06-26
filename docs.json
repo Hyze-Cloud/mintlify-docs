@@ -1,34 +1,88 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Hyze Cloud",
+  "appearance": {
+    "default": "dark",
+    "strict": true
+  },
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#6d5dd3",
+    "light": "#6d5dd3",
+    "dark": "#6d5dd3"
+  },
+  "api": {
+    "openapi": {
+      "source": "openapi.json",
+      "directory": "api-reference"
+    },
+    "playground": {
+      "display": "interactive"
+    },
+    "examples": {
+      "languages": ["curl", "python", "javascript", "go"],
+      "defaults": "required",
+      "prefill": true,
+      "autogenerate": true
+    },
+    "mdx": {
+      "auth": {
+        "method": "bearer"
+      },
+      "server": "https://api.hyze.cloud/api"
+    }
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "tab": "Getting Started",
+        "groups": [
+          {
+            "group": "Start",
+            "pages": ["index", "quickstart", "getting-started/authentication"]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Endpoints",
+            "openapi": "openapi.json"
+          }
+        ]
+      },
+      {
+        "tab": "FAQ",
+        "groups": [
+          {
+            "group": "Help",
+            "pages": ["faq"]
+          }
         ]
       }
     ],
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Dashboard",
+          "href": "https://app.hyze.cloud",
+          "icon": "rocket"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "API Status",
+          "href": "https://api.hyze.cloud/health",
+          "icon": "signal"
+        },
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/hyzecloud/hyzecloud",
+          "icon": "github"
         }
       ]
     }
@@ -40,15 +94,26 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "llms.txt",
+        "href": "/llms.txt"
+      },
+      {
+        "label": "Repositório",
+        "href": "https://github.com/hyzecloud/hyzecloud"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "href": "https://app.hyze.cloud"
     }
+  },
+  "fonts": {
+    "family": "Fustat"
+  },
+  "styling": {
+    "latex": true,
+    "codeblocks": "system"
   },
   "contextual": {
     "options": [
@@ -64,9 +129,9 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/hyzecloud",
+      "github": "https://github.com/hyzecloud",
+      "linkedin": "https://linkedin.com/company/hyzecloud"
     }
   }
 }

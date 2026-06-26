@@ -1,0 +1,80 @@
+---
+title: Introduction
+description: Authentication, base URL, and API conventions.
+---
+
+## Base URL
+
+All API requests are made to:
+
+```
+https://api.hyze.cloud/api
+```
+
+## Authentication
+
+Every request requires an API key passed as a Bearer token in the `Authorization` header:
+
+```
+Authorization: Bearer hyze_your_api_key_here
+```
+
+API keys start with the `hyze_` prefix. You can create and manage keys from the [Dashboard](https://app.hyze.cloud) or via the [API Keys endpoints](/api-reference/api-keys).
+
+<Tip>
+  Session cookie auth is also supported. If you're calling from the browser while logged in, your session cookie will authenticate the request automatically.
+</Tip>
+
+## Conventions
+
+### Content type
+
+All request and response bodies are `application/json`, except for file uploads which use `multipart/form-data`.
+
+### Response envelope
+
+All endpoints return a consistent envelope:
+
+```json
+{ "success": true, "data": {} }
+```
+
+When an error occurs:
+
+```json
+{ "success": false, "error": "Error message", "code": "ERROR_CODE" }
+```
+
+### Rate limiting
+
+Some endpoints enforce rate limits and will return `429 Too Many Requests` with a `Retry-After` header.
+
+## Workspaces
+
+Most endpoints require an active workspace. Workspaces are set via the web dashboard or via `POST /api/auth/set-active-organization` before using the API key.
+
+When using an API key without a session cookie, workspace-scoped endpoints require you to pass a `workspaceId` query parameter (where supported) or maintain an active workspace session.
+
+## Examples
+
+```bash Language=bash
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer hyze_your_key"
+```
+
+```js Language=JavaScript
+const res = await fetch("https://api.hyze.cloud/api/apps/", {
+  headers: { Authorization: `Bearer ${process.env.HYZE_API_KEY}` },
+});
+const data = await res.json();
+```
+
+```python Language=Python
+import requests
+
+resp = requests.get(
+    "https://api.hyze.cloud/api/apps/",
+    headers={"Authorization": f"Bearer {HYZE_API_KEY}"},
+)
+data = resp.json()
+```

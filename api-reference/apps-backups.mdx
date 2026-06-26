@@ -1,0 +1,70 @@
+---
+title: Apps — Backups
+description: Backup management for applications.
+---
+
+## Create Backup
+
+```http POST /api/apps/:appId/backup
+```
+
+Triggers a manual backup of the app's container and volume.
+
+```bash Language=bash
+curl -X POST https://api.hyze.cloud/api/apps/app_001/backup \
+  -H "Authorization: Bearer hyze_your_key"
+```
+
+```json Response
+{
+  "success": true,
+  "backup": {
+    "id": "backup_abc123",
+    "storageKey": "apps/app_001/backups/backup_abc123.tar.gz",
+    "sizeBytes": 5242880
+  }
+}
+```
+
+---
+
+## List Backups
+
+```http GET /api/apps/:appId/backups
+```
+
+---
+
+## Restore Backup
+
+```http POST /api/apps/:appId/backups/restore
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `backupId` | `string` | Yes | Backup ID |
+
+```bash Language=bash
+curl -X POST https://api.hyze.cloud/api/apps/app_001/backups/restore \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "backupId": "backup_abc123" }'
+```
+
+---
+
+## Download Backup
+
+```http GET /api/apps/:appId/backups/:backupId/download
+```
+
+Returns the backup file as a binary attachment (`Content-Disposition: attachment`).
+
+---
+
+## Delete All Backups
+
+```http DELETE /api/apps/:appId/backups
+```
+
+Permanently removes all backups for the app.

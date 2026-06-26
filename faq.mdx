@@ -1,0 +1,43 @@
+---
+title: FAQ
+description: Short answers to common Hyze Cloud API questions.
+---
+
+## Do I need an API key?
+
+Yes. Private endpoints require `Authorization: Bearer hyze_your_key`.
+
+## What is the API base URL?
+
+Use `https://api.hyze.cloud/api`.
+
+## Which runtimes are supported?
+
+Apps support Node.js, Bun, and Python.
+
+## Which databases are supported?
+
+Hyze Cloud supports PostgreSQL, MySQL, MongoDB, and Redis.
+
+## Should I use the API or Dashboard?
+
+Use the Dashboard for manual operations.
+
+Use the API for CI/CD, internal tools, and automation.
+
+## Where should secrets live?
+
+Store secrets in app environment variables or your external secret manager.
+
+Never commit them to source control.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" href="/quickstart">
+    Make your first request.
+  </Card>
+  <Card title="Authentication" icon="key" href="/getting-started/authentication">
+    Learn API key auth.
+  </Card>
+</CardGroup>

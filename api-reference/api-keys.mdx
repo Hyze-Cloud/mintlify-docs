@@ -1,0 +1,102 @@
+---
+title: API Keys
+description: Create and manage your API keys.
+---
+
+## List API Keys
+
+```http GET /api/api-keys/
+```
+
+Returns all API keys for the authenticated user.
+
+```bash Language=bash
+curl https://api.hyze.cloud/api/api-keys/ \
+  -H "Authorization: Bearer hyze_your_key"
+```
+
+```json Response
+{
+  "success": true,
+  "keys": [
+    {
+      "id": "key_abc123",
+      "name": "Production",
+      "prefix": "hyze_",
+      "enabled": true,
+      "remaining": null,
+      "createdAt": "2026-06-24T23:00:00Z",
+      "updatedAt": "2026-06-24T23:00:00Z"
+    }
+  ]
+}
+```
+
+---
+
+## Create API Key
+
+```http POST /api/api-keys/
+```
+
+Creates a new API key for your workspace. The full key value is only returned once at creation time.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | `string` | Yes | Label for this key |
+| `expiresIn` | `number \| null` | No | Lifetime in seconds (`null` = never) |
+| `prefix` | `string` | No | Custom key prefix |
+| `remaining` | `number` | No | Usage quota limit |
+| `metadata` | `object` | No | Arbitrary metadata |
+
+```bash Language=bash
+curl -X POST https://api.hyze.cloud/api/api-keys/ \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "name": "CI/CD" }'
+```
+
+```json Response
+{
+  "success": true,
+  "key": "hyze_new_key_value_here",
+  "id": "key_xyz789"
+}
+```
+
+---
+
+## Update API Key
+
+```http PUT /api/api-keys/:keyId
+```
+
+Updates an existing API key's name, enabled status, or remaining quota.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | `string` | No | New label |
+| `enabled` | `boolean` | No | Enable or disable the key |
+| `remaining` | `number` | No | Update usage limit |
+| `metadata` | `object` | No | Update metadata |
+
+```bash Language=bash
+curl -X PUT https://api.hyze.cloud/api/api-keys/key_abc123 \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "enabled": false }'
+```
+
+---
+
+## Revoke API Key
+
+```http DELETE /api/api-keys/:keyId
+```
+
+Permanently deletes an API key. A security notification is emitted.
+
+```bash Language=bash
+curl -X DELETE https://api.hyze.cloud/api/api-keys/key_abc123 \
+  -H "Authorization: Bearer hyze_your_key"
+```

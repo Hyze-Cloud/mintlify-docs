@@ -1,0 +1,2597 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Hyze Cloud API",
+    "description": "Official API documentation",
+    "version": "1.0.0"
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "x-default": "hyze_your_api_key"
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "better-auth.session_token"
+      }
+    },
+    "schemas": {}
+  },
+  "paths": {
+    "/api/api-keys/": {
+      "get": {
+        "tags": [
+          "API Keys"
+        ],
+        "summary": "List API keys",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "operationId": "getApiApi-keys",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "API Keys"
+        ],
+        "summary": "Create an API key",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "expiresIn": {
+                    "nullable": true,
+                    "type": "number"
+                  },
+                  "prefix": {
+                    "type": "string"
+                  },
+                  "remaining": {
+                    "type": "number"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "expiresIn": {
+                    "nullable": true,
+                    "type": "number"
+                  },
+                  "prefix": {
+                    "type": "string"
+                  },
+                  "remaining": {
+                    "type": "number"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "expiresIn": {
+                    "nullable": true,
+                    "type": "number"
+                  },
+                  "prefix": {
+                    "type": "string"
+                  },
+                  "remaining": {
+                    "type": "number"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "postApiApi-keys",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/api-keys/{keyId}": {
+      "put": {
+        "tags": [
+          "API Keys"
+        ],
+        "summary": "Update an API key",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "keyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "remaining": {
+                    "type": "number"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "remaining": {
+                    "type": "number"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "remaining": {
+                    "type": "number"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "putApiApi-keysByKeyId",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "API Keys"
+        ],
+        "summary": "Delete an API key",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "keyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "deleteApiApi-keysByKeyId",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/deploy": {
+      "post": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Deploy app from uploaded ZIP",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file",
+                  "name",
+                  "runtime",
+                  "memoryMB",
+                  "startupCommand"
+                ],
+                "properties": {
+                  "file": {
+                    "default": "File",
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "startupCommand": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "exposePort": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "subdomain": {
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file",
+                  "name",
+                  "runtime",
+                  "memoryMB",
+                  "startupCommand"
+                ],
+                "properties": {
+                  "file": {
+                    "default": "File",
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "startupCommand": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "exposePort": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "subdomain": {
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file",
+                  "name",
+                  "runtime",
+                  "memoryMB",
+                  "startupCommand"
+                ],
+                "properties": {
+                  "file": {
+                    "default": "File",
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "startupCommand": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "exposePort": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "subdomain": {
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "postApiAppsDeploy",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/deploy-from-repo": {
+      "post": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Deploy app from GitHub repository",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "runtime",
+                  "memoryMB",
+                  "startupCommand",
+                  "repository"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "startupCommand": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "exposePort": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "subdomain": {
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  },
+                  "autoDeploy": {
+                    "type": "boolean"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "repository": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "owner",
+                      "name",
+                      "branch"
+                    ],
+                    "properties": {
+                      "id": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "owner": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "name": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "branch": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "githubInstallationId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "runtime",
+                  "memoryMB",
+                  "startupCommand",
+                  "repository"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "startupCommand": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "exposePort": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "subdomain": {
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  },
+                  "autoDeploy": {
+                    "type": "boolean"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "repository": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "owner",
+                      "name",
+                      "branch"
+                    ],
+                    "properties": {
+                      "id": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "owner": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "name": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "branch": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "githubInstallationId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "runtime",
+                  "memoryMB",
+                  "startupCommand",
+                  "repository"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "startupCommand": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "exposePort": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "subdomain": {
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  },
+                  "autoDeploy": {
+                    "type": "boolean"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "repository": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "owner",
+                      "name",
+                      "branch"
+                    ],
+                    "properties": {
+                      "id": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          }
+                        ]
+                      },
+                      "owner": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "name": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "branch": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "githubInstallationId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "postApiAppsDeploy-from-repo",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "List apps",
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "organizationId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiApps",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Get app details",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiAppsByAppId",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Delete app",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "deleteApiAppsByAppId",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/builds": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "List app builds",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiAppsByAppIdBuilds",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/start": {
+      "post": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Start app",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postApiAppsByAppIdStart",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/stop": {
+      "post": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Stop app",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postApiAppsByAppIdStop",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/restart": {
+      "post": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Restart app",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postApiAppsByAppIdRestart",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/logs": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Get app logs",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "tail",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "name": "timestamps",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "operationId": "getApiAppsByAppIdLogs",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/env": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Get app environment variables",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiAppsByAppIdEnv",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Replace app environment variables",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "envVars"
+                ]
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "envVars"
+                ]
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "envVars": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "envVars"
+                ]
+              }
+            }
+          }
+        },
+        "operationId": "putApiAppsByAppIdEnv",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/settings": {
+      "put": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Update app settings",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "type": "number"
+                  },
+                  "startupCommand": {
+                    "type": "string"
+                  },
+                  "exposePort": {
+                    "nullable": true,
+                    "type": "number"
+                  },
+                  "subdomain": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "type": "number"
+                  },
+                  "startupCommand": {
+                    "type": "string"
+                  },
+                  "exposePort": {
+                    "nullable": true,
+                    "type": "number"
+                  },
+                  "subdomain": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "runtime": {
+                    "type": "string",
+                    "enum": [
+                      "node",
+                      "bun",
+                      "python"
+                    ]
+                  },
+                  "memoryMB": {
+                    "type": "number"
+                  },
+                  "startupCommand": {
+                    "type": "string"
+                  },
+                  "exposePort": {
+                    "nullable": true,
+                    "type": "number"
+                  },
+                  "subdomain": {
+                    "nullable": true,
+                    "type": "string"
+                  },
+                  "autoRestart": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "putApiAppsByAppIdSettings",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/backup": {
+      "post": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Create app backup",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postApiAppsByAppIdBackup",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/backups": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "List app backups",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiAppsByAppIdBackups",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Delete all app backups",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "deleteApiAppsByAppIdBackups",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/backups/restore": {
+      "post": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Restore app backup",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "backupId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "backupId"
+                ]
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "backupId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "backupId"
+                ]
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "backupId": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "backupId"
+                ]
+              }
+            }
+          }
+        },
+        "operationId": "postApiAppsByAppIdBackupsRestore",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/apps/{appId}/backups/{backupId}/download": {
+      "get": {
+        "tags": [
+          "Applications"
+        ],
+        "summary": "Download app backup",
+        "parameters": [
+          {
+            "name": "appId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "backupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiAppsByAppIdBackupsByBackupIdDownload",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/": {
+      "post": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Create a database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "engine"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "engine": {
+                    "type": "string",
+                    "enum": [
+                      "postgresql",
+                      "mysql",
+                      "mongodb",
+                      "redis"
+                    ]
+                  },
+                  "version": {
+                    "type": "string"
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "storageGB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "minLength": 8,
+                    "type": "string"
+                  },
+                  "databaseName": {
+                    "type": "string"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "engine"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "engine": {
+                    "type": "string",
+                    "enum": [
+                      "postgresql",
+                      "mysql",
+                      "mongodb",
+                      "redis"
+                    ]
+                  },
+                  "version": {
+                    "type": "string"
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "storageGB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "minLength": 8,
+                    "type": "string"
+                  },
+                  "databaseName": {
+                    "type": "string"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "engine"
+                ],
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "engine": {
+                    "type": "string",
+                    "enum": [
+                      "postgresql",
+                      "mysql",
+                      "mongodb",
+                      "redis"
+                    ]
+                  },
+                  "version": {
+                    "type": "string"
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "storageGB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "minLength": 8,
+                    "type": "string"
+                  },
+                  "databaseName": {
+                    "type": "string"
+                  },
+                  "machineId": {
+                    "nullable": true,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "postApiDatabases",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "List databases",
+        "operationId": "getApiDatabases",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}": {
+      "get": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Get a database",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiDatabasesByDatabaseId",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Delete a database",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "deleteApiDatabasesByDatabaseId",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/settings": {
+      "patch": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Update database settings",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "memoryMB": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patchApiDatabasesByDatabaseIdSettings",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/stats": {
+      "get": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Get database stats",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiDatabasesByDatabaseIdStats",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/logs": {
+      "get": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Get database logs",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "tail",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "name": "timestamps",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "operationId": "getApiDatabasesByDatabaseIdLogs",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/start": {
+      "post": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Start a database",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postApiDatabasesByDatabaseIdStart",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/stop": {
+      "post": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Stop a database",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postApiDatabasesByDatabaseIdStop",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/rotate-password": {
+      "post": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Rotate database password",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "minLength": 8,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "minLength": 8,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "minLength": 8,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "postApiDatabasesByDatabaseIdRotate-password",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/backups": {
+      "post": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Create a database backup",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "postApiDatabasesByDatabaseIdBackups",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "List database backups",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiDatabasesByDatabaseIdBackups",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/backups/{backupId}/download": {
+      "get": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Download a database backup",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "backupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiDatabasesByDatabaseIdBackupsByBackupIdDownload",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/restore": {
+      "post": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "Restore a database backup",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "backupId"
+                ],
+                "properties": {
+                  "backupId": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "backupId"
+                ],
+                "properties": {
+                  "backupId": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "backupId"
+                ],
+                "properties": {
+                  "backupId": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "postApiDatabasesByDatabaseIdRestore",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/databases/{databaseId}/operations": {
+      "get": {
+        "tags": [
+          "Databases"
+        ],
+        "summary": "List database operations",
+        "parameters": [
+          {
+            "name": "databaseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiDatabasesByDatabaseIdOperations",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/integrations/github/status": {
+      "get": {
+        "tags": [
+          "GitHub Integrations"
+        ],
+        "summary": "Get GitHub integration status",
+        "operationId": "getApiIntegrationsGithubStatus",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/integrations/github/install-url": {
+      "get": {
+        "tags": [
+          "GitHub Integrations"
+        ],
+        "summary": "Create GitHub App install URL",
+        "operationId": "getApiIntegrationsGithubInstall-url",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/integrations/github/connection": {
+      "delete": {
+        "tags": [
+          "GitHub Integrations"
+        ],
+        "summary": "Disconnect GitHub integration",
+        "operationId": "deleteApiIntegrationsGithubConnection",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/integrations/github/repos": {
+      "get": {
+        "tags": [
+          "GitHub Integrations"
+        ],
+        "summary": "List GitHub repositories",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "operationId": "getApiIntegrationsGithubRepos",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/integrations/github/repos/{owner}/{repo}/branches": {
+      "get": {
+        "tags": [
+          "GitHub Integrations"
+        ],
+        "summary": "List GitHub repository branches",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiIntegrationsGithubReposByOwnerByRepoBranches",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/integrations/github/repos/{owner}/{repo}/runtime": {
+      "get": {
+        "tags": [
+          "GitHub Integrations"
+        ],
+        "summary": "Detect GitHub repository runtime",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "branch",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "operationId": "getApiIntegrationsGithubReposByOwnerByRepoRuntime",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/invoices/": {
+      "get": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "List invoices",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "operationId": "getApiInvoices",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/invoices/pix": {
+      "post": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Create a PIX invoice",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "planId"
+                ],
+                "properties": {
+                  "planId": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "interval": {
+                    "type": "string",
+                    "enum": [
+                      "month",
+                      "quarter",
+                      "semiannual",
+                      "year"
+                    ]
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "planId"
+                ],
+                "properties": {
+                  "planId": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "interval": {
+                    "type": "string",
+                    "enum": [
+                      "month",
+                      "quarter",
+                      "semiannual",
+                      "year"
+                    ]
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "planId"
+                ],
+                "properties": {
+                  "planId": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "interval": {
+                    "type": "string",
+                    "enum": [
+                      "month",
+                      "quarter",
+                      "semiannual",
+                      "year"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "postApiInvoicesPix",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    },
+    "/api/invoices/{invoiceId}/status": {
+      "get": {
+        "tags": [
+          "Invoices"
+        ],
+        "summary": "Get invoice status",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "includePix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        ],
+        "operationId": "getApiInvoicesByInvoiceIdStatus",
+        "responses": {
+          "default": {
+            "description": "Response"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.hyze.cloud"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

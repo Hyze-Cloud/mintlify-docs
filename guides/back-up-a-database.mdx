@@ -1,0 +1,45 @@
+---
+title: Back up a database
+description: Create and restore database backups safely.
+---
+
+Backups protect data before migrations, risky changes, or production maintenance.
+
+## Goal
+
+Create a manual backup for a database.
+
+## When to use
+
+Use a backup before schema changes, imports, password rotation, or manual maintenance.
+
+## Example
+
+```bash
+curl -X POST https://api.hyze.cloud/api/databases/db_001/backups \
+  -H "Authorization: Bearer hyze_your_key"
+```
+
+## Restore
+
+```bash
+curl -X POST https://api.hyze.cloud/api/databases/db_001/restore \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "backupId": "backup_db_001" }'
+```
+
+<Warning>
+  Restores can replace live data. Confirm the target database before running this in production.
+</Warning>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Databases API" icon="database" href="/api-reference/databases">
+    View backup and restore endpoints.
+  </Card>
+  <Card title="Provision a database" icon="plus" href="/guides/provision-a-database">
+    Create a new database first.
+  </Card>
+</CardGroup>

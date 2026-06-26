@@ -1,12 +1,8 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
 # Documentation project instructions
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
+- This is the Hyze Cloud API documentation, built on [Mintlify](https://mintlify.com)
 - Pages are MDX files with YAML frontmatter
 - Configuration lives in `docs.json`
 - Use the Mintlify MCP server, `https://mcp.mintlify.com`, to edit content and settings via MCP
@@ -14,20 +10,30 @@
 
 ## Terminology
 
-{/* Add product-specific terms and preferred usage */}
-{/* Example: Use "workspace" not "project", "member" not "user" */}
+- Use "workspace" not "organization" (the API uses both, but "workspace" is the preferred UX term)
+- Use "app" not "container" or "project"
+- Use "database" not "db instance"
+- Use "API key" not "token" or "secret"
+
+## Brand
+
+- Company: Hyze Cloud
+- Primary color: `#6d5dd3` (purple)
+- Dashboard: https://app.hyze.cloud
+- API base: https://api.hyze.cloud/api
+- GitHub: https://github.com/hyzecloud
 
 ## Style preferences
-
-{/* Add any project-specific style rules below */}
 
 - Use active voice and second person ("you")
 - Keep sentences concise — one idea per sentence
 - Use sentence case for headings
 - Bold for UI elements: Click **Settings**
 - Code formatting for file names, commands, paths, and code references
+- Use Mintlify components: `<Card>`, `<Accordion>`, `<Steps>`, `<Step>`, `<Tip>`, `<Callout>`
 
 ## Content boundaries
 
-{/* Define what should and shouldn't be documented */}
-{/* Example: Don't document internal admin features */}
+- Document all user-facing API endpoints accessible via API key
+- Do not document internal/worker endpoints or admin-only features
+- Do not document Better Auth built-in endpoints (those are under `/api/auth/*`)

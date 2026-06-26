@@ -1,0 +1,94 @@
+---
+title: Integrations
+description: GitHub integration endpoints.
+---
+
+## Connection Status
+
+```http GET /api/integrations/github/status
+```
+
+Returns the GitHub App connection status for your workspace.
+
+```json Response
+{ "success": true, "connected": true, "installationId": 123456 }
+```
+
+---
+
+## Install URL
+
+```http GET /api/integrations/github/install-url
+```
+
+Generates a GitHub App installation URL with a signed state token.
+
+```json Response
+{ "success": true, "url": "https://github.com/apps/hyze-cloud/installations/new?state=..." }
+```
+
+---
+
+## Disconnect
+
+```http DELETE /api/integrations/github/connection
+```
+
+Disconnects the GitHub App. Pauses all auto-deploy apps linked to the connection.
+
+```json Response
+{ "success": true, "disconnected": true, "autoDeployPausedCount": 3 }
+```
+
+---
+
+## List Repositories
+
+```http GET /api/integrations/github/repos
+```
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `search` | `string` | — | Filter by name |
+| `page` | `number` | `1` | Page number |
+| `perPage` | `number` | `20` | Repos per page |
+
+```json Response
+{
+  "success": true,
+  "installationId": 123456,
+  "repos": [
+    { "id": 1, "name": "my-app", "fullName": "user/my-app", "private": false }
+  ]
+}
+```
+
+---
+
+## List Branches
+
+```http GET /api/integrations/github/repos/:owner/:repo/branches
+```
+
+Returns branches for a repository.
+
+---
+
+## Detect Runtime
+
+```http GET /api/integrations/github/repos/:owner/:repo/runtime
+```
+
+Detects the runtime from repository files.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `branch` | `string` | Yes | Branch name |
+
+```json Response
+{
+  "success": true,
+  "runtime": "node",
+  "detectedFiles": ["package.json", "server.js"]
+}
+```

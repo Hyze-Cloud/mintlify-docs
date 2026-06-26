@@ -1,0 +1,90 @@
+---
+title: Invoices
+description: Billing and payment invoices.
+---
+
+## List Invoices
+
+```http GET /api/invoices/
+```
+
+Returns the user's invoices.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `limit` | `number` | `20` | Max results (1-50) |
+
+```json Response
+{
+  "success": true,
+  "invoices": [
+    {
+      "id": "inv_001",
+      "status": "paid",
+      "amount": 2900,
+      "plan": "Pro",
+      "createdAt": "2026-06-24T23:00:00Z"
+    }
+  ]
+}
+```
+
+---
+
+## Create PIX Invoice
+
+```http POST /api/invoices/pix
+```
+
+Creates a PIX invoice for plan checkout.
+
+<Callout type="warning">
+  Rate limited: 5 requests per 60 seconds per user.
+</Callout>
+
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `planId` | `string` | Yes | — | Plan ID |
+| `interval` | `string` | No | `month` | `month` \| `quarter` \| `semiannual` \| `year` |
+
+```bash Language=bash
+curl -X POST https://api.hyze.cloud/api/invoices/pix \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "planId": "plan_pro", "interval": "month" }'
+```
+
+```json Response
+{
+  "success": true,
+  "invoice": {
+    "providerInvoiceId": "inv_abc123",
+    "amount": 2900,
+    "status": "pending",
+    "brCode": "00020126...",
+    "brCodeBase64": "iVBORw0KGgo...",
+    "expiresAt": "2026-06-25T23:00:00Z"
+  }
+}
+```
+
+---
+
+## Check Invoice Status
+
+```http GET /api/invoices/:invoiceId/status
+```
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `includePix` | `boolean` | `false` | Include PIX BR code |
+
+```json Response
+{
+  "success": true,
+  "invoice": {
+    "status": "paid",
+    "paidAt": "2026-06-24T23:30:00Z"
+  }
+}
+```

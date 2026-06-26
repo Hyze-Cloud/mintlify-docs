@@ -1,0 +1,54 @@
+---
+title: Deploy from GitHub
+description: Deploy an app from a connected GitHub repository.
+---
+
+Use GitHub deployments when your source code already lives in a repository.
+
+## Goal
+
+Create an app from a repository and optionally enable auto deploys.
+
+## When to use
+
+Use this flow for production apps, team workflows, and branch-based deploys.
+
+## Example
+
+```bash
+curl -X POST https://api.hyze.cloud/api/apps/deploy-from-repo \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "api",
+    "runtime": "node",
+    "memoryMB": 512,
+    "startupCommand": "npm start",
+    "exposePort": 3000,
+    "autoDeploy": true,
+    "repository": {
+      "owner": "hyzecloud",
+      "name": "api",
+      "branch": "main"
+    }
+  }'
+```
+
+## How it works
+
+Hyze Cloud pulls the selected branch, builds the app, and starts it with your `startupCommand`.
+
+<Tip>
+  Enable `autoDeploy` when pushes to the branch should trigger new deployments.
+</Tip>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="View logs" icon="terminal" href="/guides/view-logs">
+    Inspect startup and runtime output.
+  </Card>
+  <Card title="Apps API" icon="book-open" href="/api-reference/apps">
+    See all app endpoints.
+  </Card>
+</CardGroup>

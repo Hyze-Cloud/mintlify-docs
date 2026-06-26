@@ -1,0 +1,207 @@
+---
+title: Databases
+description: Provision and manage databases.
+---
+
+## Create Database
+
+```http POST /api/databases/
+```
+
+Provisions a new database instance (PostgreSQL, MySQL, MongoDB, or Redis).
+
+<Accordion title="Request body">
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `name` | `string` | Yes | — | Instance name |
+| `engine` | `string` | Yes | — | `postgresql` \| `mysql` \| `mongodb` \| `redis` |
+| `version` | `string` | No | latest | Engine version |
+| `memoryMB` | `number` | No | `512` | Memory (>= 256) |
+| `storageGB` | `number` | No | `5` | Storage (>= 1) |
+| `username` | `string` | No | auto | DB username |
+| `password` | `string` | No | auto | DB password (>= 8 chars) |
+| `databaseName` | `string` | No | auto | Database name |
+| `machineId` | `string` | No | auto | Target machine |
+</Accordion>
+
+```bash Language=bash
+curl -X POST https://api.hyze.cloud/api/databases/ \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "prod-postgres",
+    "engine": "postgresql",
+    "memoryMB": 1024,
+    "storageGB": 20
+  }'
+```
+
+```json Response
+{
+  "success": true,
+  "database": {
+    "id": "db_001",
+    "name": "prod-postgres",
+    "engine": "postgresql",
+    "status": "running",
+    "connectionString": "postgresql://user:pass@host:5432/db"
+  },
+  "operationId": "op_abc123"
+}
+```
+
+---
+
+## List Databases
+
+```http GET /api/databases/
+```
+
+Returns all databases in the active workspace. Connection strings are masked.
+
+---
+
+## Get Database
+
+```http GET /api/databases/:databaseId
+```
+
+Returns details for a single database. Live status is synced from the worker.
+
+---
+
+## Update Settings
+
+```http PATCH /api/databases/:databaseId/settings
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | `string` | New name |
+| `memoryMB` | `number` | Memory (>= 256) |
+
+---
+
+## Get Stats
+
+```http GET /api/databases/:databaseId/stats
+```
+
+Returns live container stats (CPU, memory, network).
+
+---
+
+## Get Logs
+
+```http GET /api/databases/:databaseId/logs
+```
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `tail` | `number` | `100` | Lines (1-2000) |
+| `timestamps` | `boolean` | `false` | Include timestamps |
+
+---
+
+## Start Database
+
+```http POST /api/databases/:databaseId/start
+```
+
+---
+
+## Stop Database
+
+```http POST /api/databases/:databaseId/stop
+```
+
+---
+
+## Delete Database
+
+```http DELETE /api/databases/:databaseId
+```
+
+Permanently deletes the database and its volume.
+
+---
+
+## Rotate Password
+
+```http POST /api/databases/:databaseId/rotate-password
+```
+
+Rotates the database password. If no password is provided, a new one is generated.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `password` | `string` | No | New password (>= 8 chars) |
+
+---
+
+## Create Backup
+
+```http POST /api/databases/:databaseId/backups
+```
+
+```json Response
+{
+  "success": true,
+  "backup": {
+    "id": "backup_db_001",
+    "storageKey": "databases/db_001/backups/backup_db_001.gz",
+    "sizeBytes": 1048576
+  }
+}
+```
+
+---
+
+## List Backups
+
+```http GET /api/databases/:databaseId/backups
+```
+
+```json Response
+{
+  "success": true,
+  "backups": [
+    {
+      "id": "backup_db_001",
+      "type": "manual",
+      "status": "completed",
+      "sizeBytes": 1048576,
+      "createdAt": "2026-06-24T23:00:00Z"
+    }
+  ]
+}
+```
+
+---
+
+## Download Backup
+
+```http GET /api/databases/:databaseId/backups/:backupId/download
+```
+
+Returns the backup file as a gzip attachment.
+
+---
+
+## Restore Backup
+
+```http POST /api/databases/:databaseId/restore
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `backupId` | `string` | Yes | Backup ID |
+
+---
+
+## Operations History
+
+```http GET /api/databases/:databaseId/operations
+```
+
+Returns all operations (create, start, stop, backup, etc.) for a database.

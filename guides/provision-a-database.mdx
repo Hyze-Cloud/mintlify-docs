@@ -1,0 +1,80 @@
+---
+title: Provision a database
+description: Create a managed database and connect it to your app.
+---
+
+Hyze Cloud can provision PostgreSQL, MySQL, MongoDB, and Redis through the same database lifecycle API.
+
+## Goal
+
+Create a database and connect it to an app.
+
+## When to use
+
+Use this when your app needs persistent storage, cache, queues, or document data.
+
+## Create a database
+
+<Steps>
+  <Step title="Pick an engine">
+    Choose `postgresql`, `mysql`, `mongodb`, or `redis`.
+  </Step>
+  <Step title="Create the instance">
+    ```bash
+    curl -X POST https://api.hyze.cloud/api/databases/ \
+      -H "Authorization: Bearer hyze_your_key" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "prod-postgres",
+        "engine": "postgresql",
+        "memoryMB": 1024,
+        "storageGB": 20
+      }'
+    ```
+  </Step>
+  <Step title="Store the connection string">
+    Copy the returned `connectionString` and save it as an app environment variable.
+  </Step>
+</Steps>
+
+<Callout type="warning">
+  Treat connection strings as secrets. Do not commit them to source control or paste them into logs.
+</Callout>
+
+## Add the connection string to an app
+
+```bash
+curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "envVars": {
+      "DATABASE_URL": "postgresql://user:pass@host:5432/db"
+    }
+  }'
+```
+
+## How it works
+
+Hyze Cloud provisions the database, returns a connection string, and lets you pass that value to your app through environment variables.
+
+## Operate the database
+
+| Task | Endpoint |
+| --- | --- |
+| View stats | [`GET /api/databases/:databaseId/stats`](/api-reference/databases#get-stats) |
+| Read logs | [`GET /api/databases/:databaseId/logs`](/api-reference/databases#get-logs) |
+| Rotate password | [`POST /api/databases/:databaseId/rotate-password`](/api-reference/databases#rotate-password) |
+| Create backup | [`POST /api/databases/:databaseId/backups`](/api-reference/databases#create-backup) |
+| Restore backup | [`POST /api/databases/:databaseId/restore`](/api-reference/databases#restore-backup) |
+
+## Related endpoints
+
+<CardGroup cols={2}>
+  <Card title="Databases reference" icon="database" href="/api-reference/databases">
+    Create, inspect, operate, back up, and restore databases.
+  </Card>
+  <Card title="App environment" icon="key" href="/api-reference/apps#set-environment-variables">
+    Store runtime secrets for your app.
+  </Card>
+</CardGroup>

@@ -1,47 +1,84 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: Quickstart
+description: Make your first API request in under five minutes.
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
+This guide gets you from a fresh Dashboard account to a working authenticated API request.
 
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+## Goal
+
+Verify that your API key works.
+
+## When to use
+
+Use this before wiring Hyze Cloud into CI/CD, scripts, or your backend.
 
 ## Prerequisites
 
 Before you begin, you must have:
 
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
+- A Hyze Cloud account ([sign up](https://app.hyze.cloud))
+- An API key (starts with `hyze_`)
 
-## Get started
+<Callout type="info">
+  The API base URL is `https://api.hyze.cloud/api`. Keep that prefix in every request.
+</Callout>
+
+## Get your API key
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
-
-    ```bash
-    npm install your-package
-    ```
+  <Step title="Log in to the Dashboard">
+    Go to [app.hyze.cloud](https://app.hyze.cloud) and log in.
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
-
-    ```bash
-    your-cli init
-    ```
+  <Step title="Navigate to API Keys">
+    Open **Settings → API Keys** and click **Create Key**.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
-
-    ```bash
-    your-cli start
-    ```
+  <Step title="Copy your key">
+    Your key starts with `hyze_`. Copy it — it won't be shown again.
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+## Make your first request
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
+<Steps>
+  <Step title="List your apps">
+    ```bash
+    curl https://api.hyze.cloud/api/apps/ \
+      -H "Authorization: Bearer hyze_your_key"
+    ```
+
+    You should receive a JSON response with your workspace apps.
+  </Step>
+</Steps>
+
+## What happens next
+
+The API returns your current apps.
+
+If this request works, authentication is configured correctly.
+
+## Check your environment
+
+Use this snippet to confirm your key is available before wiring it into CI/CD.
+
+```bash
+export HYZE_API_KEY="hyze_your_key"
+
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer $HYZE_API_KEY"
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Deploy an app" icon="rocket" href="/guides/deploy-an-app">
+    Create your first app from a ZIP file or a GitHub repository.
+  </Card>
+  <Card title="Provision a database" icon="database" href="/guides/provision-a-database">
+    Create a database and copy its connection string into your app environment.
+  </Card>
+</CardGroup>
+
+<Tip>
+  All endpoints use Bearer token authentication. Pass your API key in the `Authorization` header: `Bearer hyze_your_key`.
 </Tip>

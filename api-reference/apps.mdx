@@ -1,0 +1,216 @@
+---
+title: Apps
+description: Deploy and manage applications.
+---
+
+## List Apps
+
+```http GET /api/apps/
+```
+
+Returns all apps in your workspace. Pass `?workspaceId=` to target a specific workspace when using an API key.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `workspaceId` | `string` | Target workspace (optional) |
+| `organizationId` | `string` | Target org (optional) |
+
+```json Response
+{
+  "success": true,
+  "apps": [
+    {
+      "id": "app_001",
+      "name": "my-api",
+      "runtime": "node",
+      "status": "running",
+      "memoryMB": 512,
+      "exposePort": 3000,
+      "subdomain": "my-api"
+    }
+  ],
+  "meta": { "total": 1 }
+}
+```
+
+---
+
+## Get App
+
+```http GET /api/apps/:appId
+```
+
+---
+
+## Deploy from ZIP
+
+```http POST /api/apps/deploy
+```
+
+Upload a ZIP file and deploy a new application.
+
+<Accordion title="Request body (multipart/form-data)">
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `file` | `File` | Yes | ZIP containing your app |
+| `name` | `string` | Yes | App name |
+| `runtime` | `string` | Yes | `node` \| `bun` \| `python` |
+| `memoryMB` | `number` | Yes | Memory allocation (MB) |
+| `startupCommand` | `string` | Yes | Start command |
+| `envVars` | `string (JSON)` | No | Environment variables |
+| `exposePort` | `number` | No | Port to expose |
+| `subdomain` | `string` | No | Custom subdomain |
+| `autoRestart` | `boolean` | No | Auto-restart on crash |
+| `machineId` | `string` | No | Target specific machine |
+</Accordion>
+
+```bash Language=bash
+curl -X POST https://api.hyze.cloud/api/apps/deploy \
+  -H "Authorization: Bearer hyze_your_key" \
+  -F "file=@app.zip" \
+  -F "name=my-api" \
+  -F "runtime=node" \
+  -F "memoryMB=512" \
+  -F "startupCommand=node server.js"
+```
+
+---
+
+## Deploy from GitHub Repo
+
+```http POST /api/apps/deploy-from-repo
+```
+
+Deploy from a connected GitHub repository.
+
+<Accordion title="Request body">
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | `string` | Yes | App name |
+| `runtime` | `string` | Yes | `node` \| `bun` \| `python` |
+| `memoryMB` | `number` | Yes | Memory (MB) |
+| `startupCommand` | `string` | Yes | Start command |
+| `envVars` | `string (JSON)` | No | Environment variables |
+| `exposePort` | `number` | No | Port to expose |
+| `subdomain` | `string` | No | Custom subdomain |
+| `autoDeploy` | `boolean` | No | Auto-deploy on push |
+| `machineId` | `string` | No | Target machine |
+| `repository` | `object` | Yes | `{ id, owner, name, branch, path?, githubInstallationId? }` |
+</Accordion>
+
+---
+
+## Inspect Env
+
+```http POST /api/apps/inspect-env
+```
+
+Upload a ZIP and detect required environment variables without deploying.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `file` | `File` | Yes | ZIP file |
+
+---
+
+## Start App
+
+```http POST /api/apps/:appId/start
+```
+
+---
+
+## Stop App
+
+```http POST /api/apps/:appId/stop
+```
+
+---
+
+## Restart App
+
+```http POST /api/apps/:appId/restart
+```
+
+---
+
+## Delete App
+
+```http DELETE /api/apps/:appId
+```
+
+---
+
+## Get Logs
+
+```http GET /api/apps/:appId/logs
+```
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `tail` | `number` | `100` | Number of lines |
+| `timestamps` | `boolean` | `false` | Include timestamps |
+
+---
+
+## Get Environment Variables
+
+```http GET /api/apps/:appId/env
+```
+
+Returns decrypted environment variables.
+
+```json Response
+{
+  "success": true,
+  "envVars": { "DATABASE_URL": "...", "PORT": "3000" }
+}
+```
+
+---
+
+## Set Environment Variables
+
+```http PUT /api/apps/:appId/env
+```
+
+Merges new variables into existing ones.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `envVars` | `Record<string, string>` | Yes | Key-value pairs |
+
+```bash Language=bash
+curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "envVars": { "NODE_ENV": "production" } }'
+```
+
+---
+
+## Update Settings
+
+```http PUT /api/apps/:appId/settings
+```
+
+Updates app settings. When runtime-affecting fields change, the container is restarted.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | `string` | New name |
+| `runtime` | `string` | `node` \| `bun` \| `python` |
+| `memoryMB` | `number` | Memory (MB) |
+| `startupCommand` | `string` | Start command |
+| `exposePort` | `number \| null` | Port to expose |
+| `subdomain` | `string \| null` | Custom subdomain |
+| `autoRestart` | `boolean` | Auto-restart on crash |
+
+---
+
+## Get Build History
+
+```http GET /api/apps/:appId/builds
+```
+
+Returns recent deploy build entries.
