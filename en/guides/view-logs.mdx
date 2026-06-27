@@ -1,0 +1,39 @@
+---
+title: View app logs
+description: Inspect recent app output from the API.
+---
+
+Logs help you debug startup failures, crashes, and runtime behavior.
+
+## Goal
+
+Fetch recent log lines for an app.
+
+## When to use
+
+Use logs after deploys, restarts, environment changes, or incident reports.
+
+## Example
+
+```bash
+curl "https://api.hyze.cloud/api/apps/app_001/logs?tail=200&timestamps=true" \
+  -H "Authorization: Bearer hyze_your_key"
+```
+
+## Options
+
+| Query | Default | Description |
+| --- | --- | --- |
+| `tail` | `100` | Number of lines to return. |
+| `timestamps` | `false` | Include timestamps in output. |
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Restart an app" icon="rotate-right" href="/api-reference/apps#restart-app">
+    Restart the process after config changes.
+  </Card>
+  <Card title="Update environment variables" icon="key" href="/en/guides/manage-secrets">
+    Change app runtime configuration.
+  </Card>
+</CardGroup>

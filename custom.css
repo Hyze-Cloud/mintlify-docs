@@ -29,8 +29,14 @@
 
 .dark .card,
 .dark [data-component-part="card-content-container"] {
-  background-color: #121212;
+  background-color: transparent;
   border-color: #1c1c1c;
+}
+
+.dark .card:hover,
+.dark [data-component-part="card-content-container"]:hover {
+  background-color: transparent;
+  border-color: #6d5dd3;
 }
 
 .dark header,
@@ -56,4 +62,16 @@
 .dark .code-block,
 .dark [data-component-part="code-block-root"] {
   border-color: #1c1c1c !important;
+}
+
+[data-component-part="language-switcher"] [data-language="en"] a::before {
+  content: "🇺🇸 ";
+}
+
+[data-component-part="language-switcher"] [data-language="pt"] a::before {
+  content: "🇧🇷 ";
+}
+
+[data-component-part="language-switcher"] button span:first-child::before {
+  content: "🌐 ";
 }

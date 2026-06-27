@@ -34,39 +34,6 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "tabs": [
-      {
-        "tab": "Getting Started",
-        "groups": [
-          {
-            "group": "Start",
-            "pages": ["index", "quickstart", "getting-started/authentication"]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "Overview",
-            "pages": ["api-reference/introduction"]
-          },
-          {
-            "group": "Endpoints",
-            "openapi": "openapi.json"
-          }
-        ]
-      },
-      {
-        "tab": "FAQ",
-        "groups": [
-          {
-            "group": "Help",
-            "pages": ["faq"]
-          }
-        ]
-      }
-    ],
     "global": {
       "anchors": [
         {
@@ -85,28 +52,186 @@
           "icon": "github"
         }
       ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
+    },
+    "languages": [
       {
-        "label": "llms.txt",
-        "href": "/llms.txt"
+        "language": "en",
+        "tabs": [
+          {
+            "tab": "Getting Started",
+            "groups": [
+              {
+                "group": "Start",
+                "pages": ["en/index", "en/quickstart", "en/getting-started/authentication"]
+              },
+              {
+                "group": "Guides",
+                "pages": [
+                  "en/guides/deploy-an-app",
+                  "en/guides/deploy-from-github",
+                  "en/guides/provision-a-database",
+                  "en/guides/back-up-a-database",
+                  "en/guides/manage-secrets",
+                  "en/guides/view-logs"
+                ]
+              },
+              {
+                "group": "Concepts",
+                "pages": [
+                  "en/concepts/apps",
+                  "en/concepts/databases",
+                  "en/concepts/workspaces",
+                  "en/concepts/secrets-and-env"
+                ]
+              },
+              {
+                "group": "Examples",
+                "pages": [
+                  "en/examples/deploy-with-curl",
+                  "en/examples/app-with-database"
+                ]
+              },
+              {
+                "group": "SDKs & CLI",
+                "pages": [
+                  "en/sdks/overview",
+                  "en/sdks/typescript",
+                  "en/cli/overview"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": ["api-reference/introduction"]
+              },
+              {
+                "group": "Endpoints",
+                "openapi": "openapi.json"
+              }
+            ]
+          },
+          {
+            "tab": "FAQ",
+            "groups": [
+              {
+                "group": "Help",
+                "pages": ["en/faq"]
+              }
+            ]
+          }
+        ],
+        "navbar": {
+          "links": [],
+          "primary": {
+            "type": "button",
+            "label": "Dashboard",
+            "href": "https://app.hyze.cloud"
+          }
+        },
+        "footer": {
+          "socials": {
+            "x": "https://x.com/hyzecloud",
+            "github": "https://github.com/hyzecloud",
+            "linkedin": "https://linkedin.com/company/hyzecloud"
+          }
+        }
       },
       {
-        "label": "Repositório",
-        "href": "https://github.com/hyzecloud/hyzecloud"
+        "language": "pt",
+        "default": true,
+        "tabs": [
+          {
+            "tab": "Introdução",
+            "groups": [
+              {
+                "group": "Início",
+                "pages": ["pt/index", "pt/quickstart", "pt/getting-started/authentication"]
+              },
+              {
+                "group": "Guias",
+                "pages": [
+                  "pt/guides/deploy-an-app",
+                  "pt/guides/deploy-from-github",
+                  "pt/guides/provision-a-database",
+                  "pt/guides/back-up-a-database",
+                  "pt/guides/manage-secrets",
+                  "pt/guides/view-logs"
+                ]
+              },
+              {
+                "group": "Conceitos",
+                "pages": [
+                  "pt/concepts/apps",
+                  "pt/concepts/databases",
+                  "pt/concepts/workspaces",
+                  "pt/concepts/secrets-and-env"
+                ]
+              },
+              {
+                "group": "Exemplos",
+                "pages": [
+                  "pt/examples/deploy-with-curl",
+                  "pt/examples/app-with-database"
+                ]
+              },
+              {
+                "group": "SDKs & CLI",
+                "pages": [
+                  "pt/sdks/overview",
+                  "pt/sdks/typescript",
+                  "pt/cli/overview"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "Visão geral",
+                "pages": ["api-reference/introduction"]
+              },
+              {
+                "group": "Endpoints",
+                "openapi": "openapi.json"
+              }
+            ]
+          },
+          {
+            "tab": "FAQ",
+            "groups": [
+              {
+                "group": "Ajuda",
+                "pages": ["pt/faq"]
+              }
+            ]
+          }
+        ],
+        "navbar": {
+          "links": [],
+          "primary": {
+            "type": "button",
+            "label": "Dashboard",
+            "href": "https://app.hyze.cloud"
+          }
+        },
+        "footer": {
+          "socials": {
+            "x": "https://x.com/hyzecloud",
+            "github": "https://github.com/hyzecloud",
+            "linkedin": "https://linkedin.com/company/hyzecloud"
+          }
+        }
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.hyze.cloud"
-    }
+    ]
+  },
+  "logo": {
+    "light": "/logo/logo2-light.png",
+    "dark": "/logo/logo2.png"
   },
   "fonts": {
     "family": "Fustat"
@@ -126,12 +251,5 @@
       "cursor",
       "vscode"
     ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/hyzecloud",
-      "github": "https://github.com/hyzecloud",
-      "linkedin": "https://linkedin.com/company/hyzecloud"
-    }
   }
 }

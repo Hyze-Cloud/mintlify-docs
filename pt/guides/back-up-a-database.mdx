@@ -1,0 +1,45 @@
+---
+title: Fazer backup de um banco
+description: Crie e restaure backups de banco de dados com segurança.
+---
+
+Backups protegem dados antes de migrações, mudanças arriscadas ou manutenção em produção.
+
+## Objetivo
+
+Criar um backup manual de um banco de dados.
+
+## Quando usar
+
+Faça backup antes de mudanças de schema, imports, rotação de senha ou manutenção manual.
+
+## Exemplo
+
+```bash
+curl -X POST https://api.hyze.cloud/api/databases/db_001/backups \
+  -H "Authorization: Bearer hyze_sua_chave"
+```
+
+## Restaurar
+
+```bash
+curl -X POST https://api.hyze.cloud/api/databases/db_001/restore \
+  -H "Authorization: Bearer hyze_sua_chave" \
+  -H "Content-Type: application/json" \
+  -d '{ "backupId": "backup_db_001" }'
+```
+
+<Warning>
+  Restaurações podem substituir dados ativos. Confirme o banco de destino antes de executar em produção.
+</Warning>
+
+## Próximos passos
+
+<CardGroup cols={2}>
+  <Card title="API de bancos" icon="database" href="/api-reference/databases">
+    Veja endpoints de backup e restauração.
+  </Card>
+  <Card title="Provisionar um banco" icon="plus" href="/pt/guides/provision-a-database">
+    Crie um novo banco primeiro.
+  </Card>
+</CardGroup>

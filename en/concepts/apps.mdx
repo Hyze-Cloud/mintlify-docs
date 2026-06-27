@@ -1,0 +1,46 @@
+---
+title: Apps
+description: Apps are deployable services that run your application code.
+---
+
+An app is the main unit you deploy on Hyze Cloud.
+
+## Goal
+
+Understand what an app contains before deploying one.
+
+## When to use
+
+Use apps for APIs, workers, dashboards, bots, and background services.
+
+## Example
+
+```json
+{
+  "name": "api",
+  "runtime": "node",
+  "memoryMB": 512,
+  "startupCommand": "npm start",
+  "exposePort": 3000
+}
+```
+
+## What an app includes
+
+- Runtime configuration
+- Environment variables
+- Logs
+- Filesystem access
+- Backups
+- Build history
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Deploy an app" icon="rocket" href="/en/guides/deploy-an-app">
+    Deploy from a ZIP artifact.
+  </Card>
+  <Card title="Apps API" icon="book-open" href="/api-reference/apps">
+    View app endpoints.
+  </Card>
+</CardGroup>

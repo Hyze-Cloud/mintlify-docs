@@ -1,0 +1,125 @@
+---
+title: Chave de API
+description: Aprenda como funcionam as chaves de API e como criá-las no dashboard da Hyze Cloud.
+icon: key
+---
+
+<Tip>
+  A **chave de API** é sua credencial de acesso à Hyze Cloud. Ela identifica seu workspace e autoriza cada requisição enviada para a nossa API. **Sem uma chave válida, nenhuma chamada será aceita.**
+</Tip>
+
+## O que você pode fazer com suas chaves
+
+As chaves de API são gerenciadas diretamente pelo dashboard. Com elas, você pode:
+
+- Ver todas as chaves ativas do seu workspace
+- Criar novas chaves para diferentes projetos (CI/CD, ambientes internos, automações)
+- Revogar chaves comprometidas ou que não estão mais em uso
+
+<Card title="Onde encontrar suas chaves" icon="gear" horizontal>
+  Todas as chaves ficam em **Settings → Developer** no [Dashboard](https://app.hyze.cloud). O painel mostra o nome, o prefixo (`hyze_…`), a última utilização e a data de criação de cada chave.
+</Card>
+
+<Card title="Erro de autenticação (401)" icon="triangle-exclamation" horizontal>
+  Você receberá um **HTTP 401** quando:
+
+  - A chave não for enviada no header `Authorization`
+  - A chave estiver incorreta ou tiver sido revogada
+  - O header não seguir o formato `Bearer hyze_...`
+</Card>
+
+## Como a autenticação funciona
+
+Toda requisição para a API da Hyze Cloud deve enviar a chave no header `Authorization` usando o esquema `Bearer`.
+
+```http
+Authorization: Bearer hyze_sua_chave
+```
+
+Exemplo real:
+
+```bash
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer hyze_sua_chave"
+```
+
+<Callout type="info">
+  A URL base da API é `https://api.hyze.cloud/api`. Mantenha esse prefixo em todas as requisições.
+</Callout>
+
+## Boas práticas de segurança
+
+<Card title="Proteja suas chaves" icon="shield-halved" horizontal>
+  - Armazene suas chaves em variáveis de ambiente (ex.: `HYZE_API_KEY`)
+  - Nunca publique sua chave em repositórios, logs ou grupos públicos
+  - A Hyze Cloud **nunca** solicitará sua chave
+  - Revogue imediatamente qualquer chave que possa ter vazado
+  - Use nomes descritivos para identificar o uso de cada chave ("CI/CD Produção", "Scripts internos")
+</Card>
+
+## Como criar uma chave de API
+
+Siga os passos abaixo no dashboard:
+
+<Steps>
+  <Step title="Acesse o Dashboard">
+    Entre em [app.hyze.cloud](https://app.hyze.cloud) com sua conta da Hyze Cloud.
+
+    <Card title="Login" icon="right-to-bracket">
+      Se você ainda não tem conta, crie uma gratuitamente em [app.hyze.cloud](https://app.hyze.cloud).
+    </Card>
+  </Step>
+  <Step title="Abra Settings → Developer">
+    No menu lateral, clique em **Settings** e selecione a aba **Developer**.
+
+    <Card title="Painel de API keys" icon="key">
+      O painel lista todas as chaves do seu workspace com nome, prefixo, última utilização e data de criação.
+    </Card>
+  </Step>
+  <Step title="Clique em New key">
+    No canto superior direito do painel de API keys, clique em **New key** para abrir o formulário de criação.
+  </Step>
+  <Step title="Dê um nome à chave">
+    Use um nome claro que identifique o uso da chave, como "CI/CD Produção" ou "Scripts internos". Esse nome aparece na lista de chaves e ajuda a revogar a chave certa no futuro.
+  </Step>
+  <Step title="Copie a chave gerada">
+    A chave completa aparece **apenas uma vez** no formulário. Copie e salve em um gerenciador de segredos (variável de ambiente, vault, etc.).
+  </Step>
+</Steps>
+
+<Callout type="warning">
+  A chave completa é exibida somente no momento da criação. Depois disso, apenas o prefixo (`hyze_…`) fica visível no Dashboard. Se você perder a chave, será preciso revogá-la e criar uma nova.
+</Callout>
+
+## Faça sua primeira requisição
+
+Depois de criar a chave, você já pode enviar requisições autenticadas:
+
+```bash
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer hyze_sua_chave"
+```
+
+Para guardar a chave em uma variável de ambiente:
+
+```bash
+export HYZE_API_KEY="hyze_sua_chave"
+
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer $HYZE_API_KEY"
+```
+
+<Card title="Nota importante" icon="circle-info">
+  O mesmo endpoint `api.hyze.cloud` é usado para todos os ambientes. O workspace é determinado automaticamente pela chave de API utilizada na requisição.
+</Card>
+
+## Próximos passos
+
+<CardGroup cols={2}>
+  <Card title="Referência de API keys" icon="key" href="/api-reference/api-keys">
+    Criar, listar, atualizar e revogar chaves via API.
+  </Card>
+  <Card title="Gerenciar secrets" icon="lock" href="/en/guides/manage-secrets">
+    Armazene chaves e configurações como variáveis de ambiente dos seus apps.
+  </Card>
+</CardGroup>

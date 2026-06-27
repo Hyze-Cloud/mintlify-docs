@@ -1,0 +1,46 @@
+---
+title: Autenticação
+description: Autentique requisições à API com uma chave de API da Hyze Cloud.
+---
+
+Use uma chave de API quando chamar a Hyze Cloud a partir de CI, servidores, scripts ou ferramentas internas.
+
+## Objetivo
+
+Enviar uma requisição autenticada para a API da Hyze Cloud.
+
+## Quando usar
+
+Use chaves de API para integrações server-side.
+
+Não exponha chaves de API em código front-end.
+
+## Exemplo
+
+```bash
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer hyze_sua_chave"
+```
+
+## Como funciona
+
+Todo endpoint privado lê a chave de API do header `Authorization`.
+
+```http
+Authorization: Bearer hyze_sua_chave
+```
+
+<Tip>
+  Armazene a chave em uma variável de ambiente como `HYZE_API_KEY`.
+</Tip>
+
+## Próximos passos
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" href="/pt/quickstart">
+    Faça sua primeira requisição e verifique sua configuração.
+  </Card>
+  <Card title="Chaves de API" icon="key" href="/api-reference/api-keys">
+    Crie, atualize e revogue chaves de API.
+  </Card>
+</CardGroup>

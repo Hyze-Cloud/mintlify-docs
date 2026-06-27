@@ -1,0 +1,48 @@
+---
+title: App com banco de dados
+description: Crie um banco de dados e passe sua string de conexão para um app.
+---
+
+Use este fluxo para APIs que precisam de armazenamento persistente.
+
+## Objetivo
+
+Provisionar PostgreSQL e anexá-lo a um app como `DATABASE_URL`.
+
+## Criar o banco de dados
+
+```bash
+curl -X POST https://api.hyze.cloud/api/databases/ \
+  -H "Authorization: Bearer hyze_sua_chave" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "prod-postgres",
+    "engine": "postgresql",
+    "memoryMB": 1024,
+    "storageGB": 20
+  }'
+```
+
+## Definir a variável do app
+
+```bash
+curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
+  -H "Authorization: Bearer hyze_sua_chave" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "envVars": {
+      "DATABASE_URL": "postgresql://user:pass@host:5432/db"
+    }
+  }'
+```
+
+## Próximos passos
+
+<CardGroup cols={2}>
+  <Card title="Provisionar um banco" icon="database" href="/pt/guides/provision-a-database">
+    Aprenda o ciclo de vida de bancos de dados.
+  </Card>
+  <Card title="Gerenciar segredos" icon="key" href="/pt/guides/manage-secrets">
+    Mantenha credenciais seguras.
+  </Card>
+</CardGroup>

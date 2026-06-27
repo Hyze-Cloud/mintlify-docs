@@ -1,0 +1,42 @@
+---
+title: Databases
+description: Databases are managed data services attached to your workspace.
+---
+
+Hyze Cloud can provision PostgreSQL, MySQL, MongoDB, and Redis.
+
+## Goal
+
+Understand when to create a database and how it connects to apps.
+
+## When to use
+
+Create a database when your app needs persistent data, queues, cache, or document storage.
+
+## Example
+
+```json
+{
+  "name": "prod-postgres",
+  "engine": "postgresql",
+  "memoryMB": 1024,
+  "storageGB": 20
+}
+```
+
+## How apps connect
+
+After creation, Hyze Cloud returns a connection string.
+
+Store it as an app environment variable like `DATABASE_URL`.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Provision a database" icon="database" href="/en/guides/provision-a-database">
+    Create a database and connect it to an app.
+  </Card>
+  <Card title="Databases API" icon="book-open" href="/api-reference/databases">
+    View database endpoints.
+  </Card>
+</CardGroup>

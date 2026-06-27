@@ -1,0 +1,46 @@
+---
+title: Authentication
+description: Authenticate API requests with a Hyze Cloud API key.
+---
+
+Use an API key when you call Hyze Cloud from CI, servers, scripts, or internal tools.
+
+## Goal
+
+Send an authenticated request to the Hyze Cloud API.
+
+## When to use
+
+Use API keys for server-side integrations.
+
+Do not expose API keys in browser code.
+
+## Example
+
+```bash
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer hyze_your_key"
+```
+
+## How it works
+
+Every private endpoint reads the API key from the `Authorization` header.
+
+```http
+Authorization: Bearer hyze_your_key
+```
+
+<Tip>
+  Store the key in an environment variable like `HYZE_API_KEY`.
+</Tip>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" href="/en/quickstart">
+    Make your first request and verify your setup.
+  </Card>
+  <Card title="API keys" icon="key" href="/api-reference/api-keys">
+    Create, update, and revoke API keys.
+  </Card>
+</CardGroup>

@@ -1,0 +1,46 @@
+---
+title: TypeScript
+description: Chame a API da Hyze Cloud a partir do TypeScript com um pequeno helper tipado.
+---
+
+Use este padrão quando quiser um cliente leve sem adicionar dependências.
+
+## Objetivo
+
+Criar um helper de API reutilizável.
+
+## Exemplo
+
+```ts
+const HYZE_API = "https://api.hyze.cloud/api";
+
+async function hyze<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`${HYZE_API}${path}`, {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${process.env.HYZE_API_KEY}`,
+      "Content-Type": "application/json",
+      ...init?.headers,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`Hyze API falhou: ${res.status}`);
+  }
+
+  return res.json() as Promise<T>;
+}
+
+const currentPlan = await hyze("/plans/current");
+```
+
+## Próximos passos
+
+<CardGroup cols={2}>
+  <Card title="Autenticação" icon="key" href="/pt/getting-started/authentication">
+    Aprenda como as chaves de API funcionam.
+  </Card>
+  <Card title="Exemplos" icon="code" href="/pt/examples/app-with-database">
+    Veja um fluxo completo de app e banco de dados.
+  </Card>
+</CardGroup>

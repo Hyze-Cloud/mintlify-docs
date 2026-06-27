@@ -1,0 +1,48 @@
+---
+title: App with database
+description: Create a database and pass its connection string to an app.
+---
+
+Use this flow for APIs that need persistent storage.
+
+## Goal
+
+Provision PostgreSQL and attach it to an app as `DATABASE_URL`.
+
+## Create the database
+
+```bash
+curl -X POST https://api.hyze.cloud/api/databases/ \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "prod-postgres",
+    "engine": "postgresql",
+    "memoryMB": 1024,
+    "storageGB": 20
+  }'
+```
+
+## Set the app variable
+
+```bash
+curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
+  -H "Authorization: Bearer hyze_your_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "envVars": {
+      "DATABASE_URL": "postgresql://user:pass@host:5432/db"
+    }
+  }'
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Provision a database" icon="database" href="/en/guides/provision-a-database">
+    Learn the database lifecycle.
+  </Card>
+  <Card title="Manage secrets" icon="key" href="/en/guides/manage-secrets">
+    Keep credentials safe.
+  </Card>
+</CardGroup>

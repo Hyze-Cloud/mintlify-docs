@@ -1,0 +1,87 @@
+---
+title: Fazer deploy de um app
+description: Envie um app Node.js, Bun ou Python com a API da Hyze Cloud.
+---
+
+Use a API de Apps quando quiser deploys a partir de CI/CD, ferramentas internas ou seu próprio painel de controle.
+
+## Escolha uma fonte de deploy
+
+<CardGroup cols={2}>
+  <Card title="Upload ZIP" icon="file-zipper" href="#deploy-from-a-zip">
+    Melhor para artefatos de build gerados por CI.
+  </Card>
+  <Card title="Repositório GitHub" icon="github" href="#deploy-from-github">
+    Melhor quando a Hyze Cloud deve baixar o código de um repositório conectado.
+  </Card>
+</CardGroup>
+
+## Deploy a partir de um ZIP
+
+<Steps>
+  <Step title="Empacote seu app">
+    Crie um ZIP com os arquivos que a Hyze Cloud deve executar. Inclua o entrypoint do seu app e o manifesto de dependências.
+  </Step>
+  <Step title="Envie a requisição de deploy">
+    ```bash
+    curl -X POST https://api.hyze.cloud/api/apps/deploy \
+      -H "Authorization: Bearer hyze_sua_chave" \
+      -F "file=@app.zip" \
+      -F "name=my-api" \
+      -F "runtime=node" \
+      -F "memoryMB=512" \
+      -F "startupCommand=node server.js" \
+      -F "exposePort=3000"
+    ```
+  </Step>
+  <Step title="Veja os logs">
+    ```bash
+    curl "https://api.hyze.cloud/api/apps/app_001/logs?tail=200&timestamps=true" \
+      -H "Authorization: Bearer hyze_sua_chave"
+    ```
+  </Step>
+</Steps>
+
+## Deploy pelo GitHub
+
+Use [`POST /api/apps/deploy-from-repo`](/api-reference/apps#deploy-from-github-repo) após conectar o GitHub no Dashboard.
+
+```json
+{
+  "name": "my-api",
+  "runtime": "node",
+  "memoryMB": 512,
+  "startupCommand": "npm start",
+  "exposePort": 3000,
+  "autoDeploy": true,
+  "repository": {
+    "id": "repo_001",
+    "owner": "hyzecloud",
+    "name": "my-api",
+    "branch": "main"
+  }
+}
+```
+
+<Tip>
+  Defina `autoDeploy` como `true` quando quiser que a Hyze Cloud faça redeploy após pushes na branch selecionada.
+</Tip>
+
+## Checklist de runtimes
+
+| Runtime | Comando típico | Observações |
+| --- | --- | --- |
+| `node` | `node server.js` ou `npm start` | Exponha a mesma porta em que seu servidor escuta. |
+| `bun` | `bun run start` | Mantenha o lockfile no artefato quando possível. |
+| `python` | `python main.py` | Inclua seu arquivo de dependências no ZIP. |
+
+## Endpoints relacionados
+
+<CardGroup cols={2}>
+  <Card title="Referência de Apps" icon="cube" href="/api-reference/apps">
+    Deploy, ciclo de vida, logs, configurações e histórico de builds.
+  </Card>
+  <Card title="Backups de app" icon="box-archive" href="/api-reference/apps-backups">
+    Crie, restaure, baixe e exclua backups de apps.
+  </Card>
+</CardGroup>

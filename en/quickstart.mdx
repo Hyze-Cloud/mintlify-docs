@@ -1,0 +1,84 @@
+---
+title: Quickstart
+description: Make your first API request in under five minutes.
+---
+
+This guide gets you from a fresh Dashboard account to a working authenticated API request.
+
+## Goal
+
+Verify that your API key works.
+
+## When to use
+
+Use this before wiring Hyze Cloud into CI/CD, scripts, or your backend.
+
+## Prerequisites
+
+Before you begin, you must have:
+
+- A Hyze Cloud account ([sign up](https://app.hyze.cloud))
+- An API key (starts with `hyze_`)
+
+<Callout type="info">
+  The API base URL is `https://api.hyze.cloud/api`. Keep that prefix in every request.
+</Callout>
+
+## Get your API key
+
+<Steps>
+  <Step title="Log in to the Dashboard">
+    Go to [app.hyze.cloud](https://app.hyze.cloud) and log in.
+  </Step>
+  <Step title="Navigate to API Keys">
+    Open **Settings → API Keys** and click **Create Key**.
+  </Step>
+  <Step title="Copy your key">
+    Your key starts with `hyze_`. Copy it — it won't be shown again.
+  </Step>
+</Steps>
+
+## Make your first request
+
+<Steps>
+  <Step title="List your apps">
+    ```bash
+    curl https://api.hyze.cloud/api/apps/ \
+      -H "Authorization: Bearer hyze_your_key"
+    ```
+
+    You should receive a JSON response with your workspace apps.
+  </Step>
+</Steps>
+
+## What happens next
+
+The API returns your current apps.
+
+If this request works, authentication is configured correctly.
+
+## Check your environment
+
+Use this snippet to confirm your key is available before wiring it into CI/CD.
+
+```bash
+export HYZE_API_KEY="hyze_your_key"
+
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer $HYZE_API_KEY"
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Deploy an app" icon="rocket" href="/en/guides/deploy-an-app">
+    Create your first app from a ZIP file or a GitHub repository.
+  </Card>
+  <Card title="Provision a database" icon="database" href="/en/guides/provision-a-database">
+    Create a database and copy its connection string into your app environment.
+  </Card>
+</CardGroup>
+
+<Tip>
+  All endpoints use Bearer token authentication. Pass your API key in the `Authorization` header: `Bearer hyze_your_key`.
+</Tip>

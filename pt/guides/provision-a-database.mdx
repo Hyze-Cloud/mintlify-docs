@@ -1,0 +1,80 @@
+---
+title: Provisionar um banco de dados
+description: Crie um banco de dados gerenciado e conecte-o ao seu app.
+---
+
+A Hyze Cloud pode provisionar PostgreSQL, MySQL, MongoDB e Redis através da mesma API de ciclo de vida de bancos.
+
+## Objetivo
+
+Criar um banco de dados e conectá-lo a um app.
+
+## Quando usar
+
+Use quando seu app precisar de armazenamento persistente, cache, filas ou dados documentais.
+
+## Criar um banco de dados
+
+<Steps>
+  <Step title="Escolha um engine">
+    Escolha `postgresql`, `mysql`, `mongodb` ou `redis`.
+  </Step>
+  <Step title="Crie a instância">
+    ```bash
+    curl -X POST https://api.hyze.cloud/api/databases/ \
+      -H "Authorization: Bearer hyze_sua_chave" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "name": "prod-postgres",
+        "engine": "postgresql",
+        "memoryMB": 1024,
+        "storageGB": 20
+      }'
+    ```
+  </Step>
+  <Step title="Guarde a string de conexão">
+    Copie o `connectionString` retornado e salve como variável de ambiente do seu app.
+  </Step>
+</Steps>
+
+<Callout type="warning">
+  Trate strings de conexão como segredos. Não as commite no controle de versão nem cole em logs.
+</Callout>
+
+## Adicionar a string de conexão a um app
+
+```bash
+curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
+  -H "Authorization: Bearer hyze_sua_chave" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "envVars": {
+      "DATABASE_URL": "postgresql://user:pass@host:5432/db"
+    }
+  }'
+```
+
+## Como funciona
+
+A Hyze Cloud provisiona o banco, retorna uma string de conexão e permite que você passe esse valor para seu app através de variáveis de ambiente.
+
+## Operar o banco de dados
+
+| Tarefa | Endpoint |
+| --- | --- |
+| Ver estatísticas | [`GET /api/databases/:databaseId/stats`](/api-reference/databases#get-stats) |
+| Ler logs | [`GET /api/databases/:databaseId/logs`](/api-reference/databases#get-logs) |
+| Rotacionar senha | [`POST /api/databases/:databaseId/rotate-password`](/api-reference/databases#rotate-password) |
+| Criar backup | [`POST /api/databases/:databaseId/backups`](/api-reference/databases#create-backup) |
+| Restaurar backup | [`POST /api/databases/:databaseId/restore`](/api-reference/databases#restore-backup) |
+
+## Endpoints relacionados
+
+<CardGroup cols={2}>
+  <Card title="Referência de bancos" icon="database" href="/api-reference/databases">
+    Crie, inspecione, opere, faça backup e restaure bancos de dados.
+  </Card>
+  <Card title="Ambiente do app" icon="key" href="/api-reference/apps#set-environment-variables">
+    Armazene segredos de runtime para seu app.
+  </Card>
+</CardGroup>

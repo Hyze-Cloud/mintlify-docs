@@ -1,0 +1,39 @@
+---
+title: Ver logs do app
+description: Inspecione a saída recente do app pela API.
+---
+
+Logs ajudam a depurar falhas de inicialização, crashes e comportamento em runtime.
+
+## Objetivo
+
+Obter linhas de log recentes de um app.
+
+## Quando usar
+
+Use logs após deploys, reinicializações, mudanças de ambiente ou relatos de incidentes.
+
+## Exemplo
+
+```bash
+curl "https://api.hyze.cloud/api/apps/app_001/logs?tail=200&timestamps=true" \
+  -H "Authorization: Bearer hyze_sua_chave"
+```
+
+## Opções
+
+| Query | Padrão | Descrição |
+| --- | --- | --- |
+| `tail` | `100` | Número de linhas a retornar. |
+| `timestamps` | `false` | Incluir timestamps na saída. |
+
+## Próximos passos
+
+<CardGroup cols={2}>
+  <Card title="Reiniciar um app" icon="rotate-right" href="/api-reference/apps#restart-app">
+    Reinicie o processo após mudanças de configuração.
+  </Card>
+  <Card title="Atualizar variáveis de ambiente" icon="key" href="/pt/guides/manage-secrets">
+    Altere a configuração de runtime do app.
+  </Card>
+</CardGroup>

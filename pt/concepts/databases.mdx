@@ -1,0 +1,42 @@
+---
+title: Bancos de dados
+description: Bancos de dados são serviços gerenciados de dados conectados ao seu workspace.
+---
+
+A Hyze Cloud pode provisionar PostgreSQL, MySQL, MongoDB e Redis.
+
+## Objetivo
+
+Entender quando criar um banco de dados e como ele se conecta a apps.
+
+## Quando usar
+
+Crie um banco de dados quando seu app precisar de dados persistentes, filas, cache ou armazenamento documental.
+
+## Exemplo
+
+```json
+{
+  "name": "prod-postgres",
+  "engine": "postgresql",
+  "memoryMB": 1024,
+  "storageGB": 20
+}
+```
+
+## Como os apps se conectam
+
+Após a criação, a Hyze Cloud retorna uma string de conexão.
+
+Armazene-a como variável de ambiente do app, como `DATABASE_URL`.
+
+## Próximos passos
+
+<CardGroup cols={2}>
+  <Card title="Provisionar um banco" icon="database" href="/pt/guides/provision-a-database">
+    Crie um banco e conecte-o a um app.
+  </Card>
+  <Card title="API de Bancos" icon="book-open" href="/api-reference/databases">
+    Veja endpoints de bancos de dados.
+  </Card>
+</CardGroup>

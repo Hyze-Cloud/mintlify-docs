@@ -1,0 +1,41 @@
+---
+title: CLI
+description: Command-line workflows for local development and automation.
+---
+
+The API is the primary automation surface today.
+
+## Goal
+
+Understand where CLI workflows fit.
+
+## When to use
+
+Use CLI-style scripts for CI/CD, local deploys, smoke tests, and operational tasks.
+
+## Example
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+curl https://api.hyze.cloud/api/apps/ \
+  -H "Authorization: Bearer $HYZE_API_KEY"
+```
+
+## Recommended setup
+
+- Store `HYZE_API_KEY` in your shell or CI secret manager.
+- Keep scripts idempotent.
+- Print short success and failure messages.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Deploy with curl" icon="terminal" href="/en/examples/deploy-with-curl">
+    Use plain shell commands for deployment.
+  </Card>
+  <Card title="Quickstart" icon="bolt" href="/en/quickstart">
+    Verify your API key first.
+  </Card>
+</CardGroup>
