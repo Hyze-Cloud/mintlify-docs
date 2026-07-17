@@ -1,5 +1,5 @@
 ---
-title: Apps — Backups
+title: Apps â€” Backups
 description: Backup management for applications.
 ---
 
@@ -11,7 +11,7 @@ description: Backup management for applications.
 Triggers a manual backup of the app's container and volume.
 
 ```bash Language=bash
-curl -X POST https://api.hyze.cloud/api/apps/app_001/backup \
+curl -X POST https://api.hyzecloud.com/api/apps/app_001/backup \
   -H "Authorization: Bearer hyze_your_key"
 ```
 
@@ -45,7 +45,7 @@ curl -X POST https://api.hyze.cloud/api/apps/app_001/backup \
 | `backupId` | `string` | Yes | Backup ID |
 
 ```bash Language=bash
-curl -X POST https://api.hyze.cloud/api/apps/app_001/backups/restore \
+curl -X POST https://api.hyzecloud.com/api/apps/app_001/backups/restore \
   -H "Authorization: Bearer hyze_your_key" \
   -H "Content-Type: application/json" \
   -d '{ "backupId": "backup_abc123" }'

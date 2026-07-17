@@ -1,46 +1,141 @@
 ---
-title: TypeScript
-description: Chame a API da Hyze Cloud a partir do TypeScript com um pequeno helper tipado.
+title: TypeScript / Node / Bun
+description: SDK oficial @hyzecloud/sdk para Node.js e Bun â€” cliente tipado da API Hyze Cloud.
+keywords: ["Hyze Cloud", "SDK", "TypeScript", "Node.js", "Bun", "API client"]
 ---
 
-Use este padrão quando quiser um cliente leve sem adicionar dependências.
+Use o pacote oficial **`@hyzecloud/sdk`** no Node.js 18+ ou Bun.
 
-## Objetivo
+## InstalaÃ§Ã£o
 
-Criar um helper de API reutilizável.
-
-## Exemplo
-
-```ts
-const HYZE_API = "https://api.hyze.cloud/api";
-
-async function hyze<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${HYZE_API}${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${process.env.HYZE_API_KEY}`,
-      "Content-Type": "application/json",
-      ...init?.headers,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error(`Hyze API falhou: ${res.status}`);
-  }
-
-  return res.json() as Promise<T>;
-}
-
-const currentPlan = await hyze("/plans/current");
+```bash
+npm install @hyzecloud/sdk
+# ou
+bun add @hyzecloud/sdk
 ```
 
-## Próximos passos
+## Quickstart
+
+```ts
+import { HyzeCloud, HyzeError } from "@hyzecloud/sdk";
+
+const hyze = new HyzeCloud({
+  apiKey: process.env.HYZE_API_KEY, // hyze_...
+});
+
+const { apps } = await hyze.apps.list();
+console.log(apps);
+
+try {
+  await hyze.apps.restart("app_001");
+} catch (err) {
+  if (err instanceof HyzeError) {
+    console.error(err.status, err.code, err.message);
+    if (err.isRateLimited) {
+      console.error("Tente de novo em", err.retryAfterSeconds, "s");
+    }
+  }
+}
+```
+
+## ConfiguraÃ§Ã£o
+
+| OpÃ§Ã£o | Default | DescriÃ§Ã£o |
+| --- | --- | --- |
+| `apiKey` | `process.env.HYZE_API_KEY` | Bearer token (`hyze_...`) |
+| `baseUrl` | `https://api.hyzecloud.com/api` | URL base da API |
+| `workspaceId` | â€” | Escopo de workspace (opcional) |
+| `fetch` | `fetch` global | ImplementaÃ§Ã£o custom de fetch |
+| `headers` | â€” | Headers extras em toda request |
+
+## Fluxos comuns
+
+### Deploy de um ZIP
+
+```ts
+import { readFileSync } from "node:fs";
+import { HyzeCloud } from "@hyzecloud/sdk";
+
+const hyze = new HyzeCloud({ apiKey: process.env.HYZE_API_KEY });
+
+await hyze.apps.deployFromZip({
+  file: readFileSync("./app.zip"),
+  name: "my-api",
+  runtime: "node",
+  memoryMB: 512,
+  startupCommand: "node server.js",
+  exposePort: 3000,
+});
+```
+
+### Provisionar database
+
+```ts
+await hyze.databases.create({
+  name: "prod-postgres",
+  engine: "postgresql",
+  memoryMB: 1024,
+  storageGB: 20,
+});
+```
+
+### Logs e env
+
+```ts
+await hyze.apps.logs("app_001", { tail: 200, timestamps: true });
+await hyze.apps.setEnv("app_001", { NODE_ENV: "production" });
+```
+
+## Recursos
+
+| Recurso | Exemplos |
+| --- | --- |
+| `hyze.apps` | list, get, deploy, start/stop/restart, logs, env, backups |
+| `hyze.databases` | create, list, start/stop, backups, stats |
+| `hyze.apiKeys` | list, create, update, delete |
+| `hyze.invoices` | list, createPix, status |
+| `hyze.github` | status, repos, branches, detectRuntime |
+| `hyze.plans` | current, list |
+
+## Requests de baixo nÃ­vel
+
+```ts
+await hyze.get("/apps/");
+await hyze.post("/apps/app_001/restart");
+await hyze.request("/apps/", {
+  method: "GET",
+  query: { workspaceId: "org_1" },
+});
+```
+
+## Erros
+
+`HyzeError` Ã© lanÃ§ado em respostas nÃ£o-2xx:
+
+| Propriedade | DescriÃ§Ã£o |
+| --- | --- |
+| `status` | Status HTTP |
+| `code` | CÃ³digo de erro da API (quando houver) |
+| `message` | Mensagem legÃ­vel |
+| `body` | Body parseado |
+| `retryAfterSeconds` | Do header `Retry-After` |
+| `isRateLimited` | `status === 429` |
+| `isUnauthorized` | `401` / `403` |
+| `isNotFound` | `404` |
+
+## PrÃ³ximos passos
 
 <CardGroup cols={2}>
-  <Card title="Autenticação" icon="key" href="/pt/getting-started/authentication">
-    Aprenda como as chaves de API funcionam.
+  <Card title="AutenticaÃ§Ã£o" icon="key" href="/pt/getting-started/authentication">
+    Como funcionam as API keys.
+  </Card>
+  <Card title="ReferÃªncia da API" icon="book-open" href="/api-reference/introduction">
+    Todos os endpoints.
+  </Card>
+  <Card title="Rate limits" icon="gauge-high" href="/pt/concepts/rate-limits">
+    Limites da API e do proxy.
   </Card>
   <Card title="Exemplos" icon="code" href="/pt/examples/app-with-database">
-    Veja um fluxo completo de app e banco de dados.
+    Fluxo app + database.
   </Card>
 </CardGroup>

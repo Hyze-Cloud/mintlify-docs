@@ -3,11 +3,11 @@ title: Provisionar um banco de dados
 description: Crie um banco de dados gerenciado e conecte-o ao seu app.
 ---
 
-A Hyze Cloud pode provisionar PostgreSQL, MySQL, MongoDB e Redis através da mesma API de ciclo de vida de bancos.
+A Hyze Cloud pode provisionar PostgreSQL, MySQL, MongoDB e Redis atravÃ©s da mesma API de ciclo de vida de bancos.
 
 ## Objetivo
 
-Criar um banco de dados e conectá-lo a um app.
+Criar um banco de dados e conectÃ¡-lo a um app.
 
 ## Quando usar
 
@@ -19,9 +19,9 @@ Use quando seu app precisar de armazenamento persistente, cache, filas ou dados 
   <Step title="Escolha um engine">
     Escolha `postgresql`, `mysql`, `mongodb` ou `redis`.
   </Step>
-  <Step title="Crie a instância">
+  <Step title="Crie a instÃ¢ncia">
     ```bash
-    curl -X POST https://api.hyze.cloud/api/databases/ \
+    curl -X POST https://api.hyzecloud.com/api/databases/ \
       -H "Authorization: Bearer hyze_sua_chave" \
       -H "Content-Type: application/json" \
       -d '{
@@ -32,19 +32,19 @@ Use quando seu app precisar de armazenamento persistente, cache, filas ou dados 
       }'
     ```
   </Step>
-  <Step title="Guarde a string de conexão">
-    Copie o `connectionString` retornado e salve como variável de ambiente do seu app.
+  <Step title="Guarde a string de conexÃ£o">
+    Copie o `connectionString` retornado e salve como variÃ¡vel de ambiente do seu app.
   </Step>
 </Steps>
 
 <Callout type="warning">
-  Trate strings de conexão como segredos. Não as commite no controle de versão nem cole em logs.
+  Trate strings de conexÃ£o como segredos. NÃ£o as commite no controle de versÃ£o nem cole em logs.
 </Callout>
 
-## Adicionar a string de conexão a um app
+## Adicionar a string de conexÃ£o a um app
 
 ```bash
-curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
+curl -X PUT https://api.hyzecloud.com/api/apps/app_001/env \
   -H "Authorization: Bearer hyze_sua_chave" \
   -H "Content-Type: application/json" \
   -d '{
@@ -56,13 +56,13 @@ curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
 
 ## Como funciona
 
-A Hyze Cloud provisiona o banco, retorna uma string de conexão e permite que você passe esse valor para seu app através de variáveis de ambiente.
+A Hyze Cloud provisiona o banco, retorna uma string de conexÃ£o e permite que vocÃª passe esse valor para seu app atravÃ©s de variÃ¡veis de ambiente.
 
 ## Operar o banco de dados
 
 | Tarefa | Endpoint |
 | --- | --- |
-| Ver estatísticas | [`GET /api/databases/:databaseId/stats`](/api-reference/databases#get-stats) |
+| Ver estatÃ­sticas | [`GET /api/databases/:databaseId/stats`](/api-reference/databases#get-stats) |
 | Ler logs | [`GET /api/databases/:databaseId/logs`](/api-reference/databases#get-logs) |
 | Rotacionar senha | [`POST /api/databases/:databaseId/rotate-password`](/api-reference/databases#rotate-password) |
 | Criar backup | [`POST /api/databases/:databaseId/backups`](/api-reference/databases#create-backup) |
@@ -71,8 +71,8 @@ A Hyze Cloud provisiona o banco, retorna uma string de conexão e permite que vo
 ## Endpoints relacionados
 
 <CardGroup cols={2}>
-  <Card title="Referência de bancos" icon="database" href="/api-reference/databases">
-    Crie, inspecione, opere, faça backup e restaure bancos de dados.
+  <Card title="ReferÃªncia de bancos" icon="database" href="/api-reference/databases">
+    Crie, inspecione, opere, faÃ§a backup e restaure bancos de dados.
   </Card>
   <Card title="Ambiente do app" icon="key" href="/api-reference/apps#set-environment-variables">
     Armazene segredos de runtime para seu app.

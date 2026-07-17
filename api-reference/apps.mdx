@@ -65,7 +65,7 @@ Upload a ZIP file and deploy a new application.
 </Accordion>
 
 ```bash Language=bash
-curl -X POST https://api.hyze.cloud/api/apps/deploy \
+curl -X POST https://api.hyzecloud.com/api/apps/deploy \
   -H "Authorization: Bearer hyze_your_key" \
   -F "file=@app.zip" \
   -F "name=my-api" \
@@ -181,7 +181,7 @@ Merges new variables into existing ones.
 | `envVars` | `Record<string, string>` | Yes | Key-value pairs |
 
 ```bash Language=bash
-curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
+curl -X PUT https://api.hyzecloud.com/api/apps/app_001/env \
   -H "Authorization: Bearer hyze_your_key" \
   -H "Content-Type: application/json" \
   -d '{ "envVars": { "NODE_ENV": "production" } }'

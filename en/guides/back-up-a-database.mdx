@@ -16,14 +16,14 @@ Use a backup before schema changes, imports, password rotation, or manual mainte
 ## Example
 
 ```bash
-curl -X POST https://api.hyze.cloud/api/databases/db_001/backups \
+curl -X POST https://api.hyzecloud.com/api/databases/db_001/backups \
   -H "Authorization: Bearer hyze_your_key"
 ```
 
 ## Restore
 
 ```bash
-curl -X POST https://api.hyze.cloud/api/databases/db_001/restore \
+curl -X POST https://api.hyzecloud.com/api/databases/db_001/restore \
   -H "Authorization: Bearer hyze_your_key" \
   -H "Content-Type: application/json" \
   -d '{ "backupId": "backup_db_001" }'

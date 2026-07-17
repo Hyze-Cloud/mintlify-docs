@@ -1,35 +1,33 @@
 ---
 title: SDKs
-description: Use SDKs e clients tipados para integrar mais rápido.
+description: Clientes oficiais e recomendados para a API da Hyze Cloud.
 ---
 
-SDKs devem tornar fluxos comuns da Hyze Cloud nativos no seu código.
+SDKs deixam os fluxos da Hyze Cloud nativos no seu código — helpers tipados, erros consistentes e menos boilerplate.
 
 ## Objetivo
 
-Escolher o caminho de integração certo.
+Escolher o caminho certo de integração.
 
 ## Quando usar
 
-Use um SDK quando quiser helpers de requisição tipados, erros consistentes e menos boilerplate.
+Use um SDK quando quiser helpers tipados, erros padronizados e menos código repetido.
 
-## Status atual
+## Pacotes oficiais
 
-A REST API é a fonte da verdade hoje.
+| Pacote | Runtime | Status |
+| --- | --- | --- |
+| [`@hyzecloud/sdk`](/pt/sdks/typescript) | Node.js 18+, Bun | Disponível |
 
-As páginas de SDK documentam padrões de client recomendados até que pacotes oficiais sejam publicados.
-
-<Note>
-  Mantenha integrações de produção na REST API se você precisa de cobertura completa de endpoints agora.
-</Note>
+A REST API continua sendo a fonte da verdade. A SDK cobre as superfícies principais (apps, databases, keys, invoices, GitHub, plans).
 
 ## Próximos passos
 
 <CardGroup cols={2}>
-  <Card title="TypeScript" icon="code" href="/pt/sdks/typescript">
-    Comece com um client tipado mínimo.
+  <Card title="TypeScript / Node / Bun" icon="code" href="/pt/sdks/typescript">
+    Instale @hyzecloud/sdk e chame a API.
   </Card>
-  <Card title="API Reference" icon="book-open" href="/api-reference/introduction">
-    Navegue pelos endpoints subjacentes.
+  <Card title="Referência da API" icon="book-open" href="/api-reference/introduction">
+    Veja os endpoints.
   </Card>
 </CardGroup>

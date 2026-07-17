@@ -1,9 +1,9 @@
 ---
 title: Deploy com curl
-description: Faça deploy de um artefato ZIP usando apenas curl.
+description: FaÃ§a deploy de um artefato ZIP usando apenas curl.
 ---
 
-Este é o menor caminho de deploy para sistemas de CI que produzem um artefato ZIP.
+Este Ã© o menor caminho de deploy para sistemas de CI que produzem um artefato ZIP.
 
 ## Objetivo
 
@@ -14,7 +14,7 @@ Fazer deploy de `app.zip` como um app na Hyze Cloud.
 ```bash
 export HYZE_API_KEY="hyze_sua_chave"
 
-curl -X POST https://api.hyze.cloud/api/apps/deploy \
+curl -X POST https://api.hyzecloud.com/api/apps/deploy \
   -H "Authorization: Bearer $HYZE_API_KEY" \
   -F "file=@app.zip" \
   -F "name=my-api" \
@@ -24,13 +24,13 @@ curl -X POST https://api.hyze.cloud/api/apps/deploy \
   -F "exposePort=3000"
 ```
 
-## Próximos passos
+## PrÃ³ximos passos
 
 <CardGroup cols={2}>
   <Card title="Ver logs" icon="terminal" href="/pt/guides/view-logs">
     Confirme que o app iniciou corretamente.
   </Card>
   <Card title="Gerenciar segredos" icon="key" href="/pt/guides/manage-secrets">
-    Adicione variáveis de ambiente de produção.
+    Adicione variÃ¡veis de ambiente de produÃ§Ã£o.
   </Card>
 </CardGroup>

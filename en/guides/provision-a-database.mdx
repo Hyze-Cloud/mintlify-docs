@@ -21,7 +21,7 @@ Use this when your app needs persistent storage, cache, queues, or document data
   </Step>
   <Step title="Create the instance">
     ```bash
-    curl -X POST https://api.hyze.cloud/api/databases/ \
+    curl -X POST https://api.hyzecloud.com/api/databases/ \
       -H "Authorization: Bearer hyze_your_key" \
       -H "Content-Type: application/json" \
       -d '{
@@ -44,7 +44,7 @@ Use this when your app needs persistent storage, cache, queues, or document data
 ## Add the connection string to an app
 
 ```bash
-curl -X PUT https://api.hyze.cloud/api/apps/app_001/env \
+curl -X PUT https://api.hyzecloud.com/api/apps/app_001/env \
   -H "Authorization: Bearer hyze_your_key" \
   -H "Content-Type: application/json" \
   -d '{

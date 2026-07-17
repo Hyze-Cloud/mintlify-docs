@@ -1,38 +1,127 @@
 ---
-title: TypeScript
-description: Call the Hyze Cloud API from TypeScript with a small typed helper.
+title: TypeScript / Node / Bun
+description: Official @hyzecloud/sdk for Node.js and Bun â€” typed client for the Hyze Cloud API.
+keywords: ["Hyze Cloud", "SDK", "TypeScript", "Node.js", "Bun", "API client"]
 ---
 
-Use this pattern when you want a lightweight client without adding dependencies.
+Use the official **`@hyzecloud/sdk`** package on Node.js 18+ or Bun.
 
-## Goal
+## Install
 
-Create a reusable API helper.
+```bash
+npm install @hyzecloud/sdk
+# or
+bun add @hyzecloud/sdk
+```
 
-## Example
+## Quickstart
 
 ```ts
-const HYZE_API = "https://api.hyze.cloud/api";
+import { HyzeCloud, HyzeError } from "@hyzecloud/sdk";
 
-async function hyze<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${HYZE_API}${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${process.env.HYZE_API_KEY}`,
-      "Content-Type": "application/json",
-      ...init?.headers,
-    },
-  });
+const hyze = new HyzeCloud({
+  apiKey: process.env.HYZE_API_KEY, // hyze_...
+});
 
-  if (!res.ok) {
-    throw new Error(`Hyze API failed: ${res.status}`);
+const { apps } = await hyze.apps.list();
+console.log(apps);
+
+try {
+  await hyze.apps.restart("app_001");
+} catch (err) {
+  if (err instanceof HyzeError) {
+    console.error(err.status, err.code, err.message);
+    if (err.isRateLimited) {
+      console.error("Retry after", err.retryAfterSeconds, "s");
+    }
   }
-
-  return res.json() as Promise<T>;
 }
-
-const currentPlan = await hyze("/plans/current");
 ```
+
+## Configuration
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `apiKey` | `process.env.HYZE_API_KEY` | Bearer token (`hyze_...`) |
+| `baseUrl` | `https://api.hyzecloud.com/api` | API base URL |
+| `workspaceId` | â€” | Optional workspace scope |
+| `fetch` | global `fetch` | Custom fetch implementation |
+| `headers` | â€” | Extra headers on every request |
+
+## Common workflows
+
+### Deploy a ZIP
+
+```ts
+import { readFileSync } from "node:fs";
+import { HyzeCloud } from "@hyzecloud/sdk";
+
+const hyze = new HyzeCloud({ apiKey: process.env.HYZE_API_KEY });
+
+await hyze.apps.deployFromZip({
+  file: readFileSync("./app.zip"),
+  name: "my-api",
+  runtime: "node",
+  memoryMB: 512,
+  startupCommand: "node server.js",
+  exposePort: 3000,
+});
+```
+
+### Provision a database
+
+```ts
+await hyze.databases.create({
+  name: "prod-postgres",
+  engine: "postgresql",
+  memoryMB: 1024,
+  storageGB: 20,
+});
+```
+
+### Logs and env
+
+```ts
+await hyze.apps.logs("app_001", { tail: 200, timestamps: true });
+await hyze.apps.setEnv("app_001", { NODE_ENV: "production" });
+```
+
+## Resources
+
+| Resource | Examples |
+| --- | --- |
+| `hyze.apps` | list, get, deploy, start/stop/restart, logs, env, backups |
+| `hyze.databases` | create, list, start/stop, backups, stats |
+| `hyze.apiKeys` | list, create, update, delete |
+| `hyze.invoices` | list, createPix, status |
+| `hyze.github` | status, repos, branches, detectRuntime |
+| `hyze.plans` | current, list |
+
+## Low-level requests
+
+```ts
+await hyze.get("/apps/");
+await hyze.post("/apps/app_001/restart");
+await hyze.request("/apps/", {
+  method: "GET",
+  query: { workspaceId: "org_1" },
+});
+```
+
+## Errors
+
+`HyzeError` is thrown on non-2xx responses:
+
+| Property | Description |
+| --- | --- |
+| `status` | HTTP status |
+| `code` | API error code when present |
+| `message` | Human-readable message |
+| `body` | Parsed response body |
+| `retryAfterSeconds` | From `Retry-After` (rate limits) |
+| `isRateLimited` | `status === 429` |
+| `isUnauthorized` | `401` / `403` |
+| `isNotFound` | `404` |
 
 ## Next steps
 
@@ -40,7 +129,13 @@ const currentPlan = await hyze("/plans/current");
   <Card title="Authentication" icon="key" href="/en/getting-started/authentication">
     Learn how API keys work.
   </Card>
+  <Card title="API reference" icon="book-open" href="/api-reference/introduction">
+    Browse all endpoints.
+  </Card>
+  <Card title="Rate limits" icon="gauge-high" href="/en/concepts/rate-limits">
+    API and proxy limits.
+  </Card>
   <Card title="Examples" icon="code" href="/en/examples/app-with-database">
-    See a complete app and database flow.
+    Full app + database flow.
   </Card>
 </CardGroup>

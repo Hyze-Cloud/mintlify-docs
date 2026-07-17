@@ -1,9 +1,9 @@
 ---
 title: CLI
-description: Fluxos de trabalho via linha de comando para desenvolvimento local e automação.
+description: Fluxos de trabalho via linha de comando para desenvolvimento local e automaÃ§Ã£o.
 ---
 
-A API é a principal superfície de automação hoje.
+A API Ã© a principal superfÃ­cie de automaÃ§Ã£o hoje.
 
 ## Objetivo
 
@@ -19,17 +19,17 @@ Use scripts estilo CLI para CI/CD, deploys locais, smoke tests e tarefas operaci
 #!/usr/bin/env bash
 set -euo pipefail
 
-curl https://api.hyze.cloud/api/apps/ \
+curl https://api.hyzecloud.com/api/apps/ \
   -H "Authorization: Bearer $HYZE_API_KEY"
 ```
 
-## Configuração recomendada
+## ConfiguraÃ§Ã£o recomendada
 
 - Armazene `HYZE_API_KEY` no seu shell ou gerenciador de segredos do CI.
 - Mantenha scripts idempotentes.
 - Exiba mensagens curtas de sucesso e falha.
 
-## Próximos passos
+## PrÃ³ximos passos
 
 <CardGroup cols={2}>
   <Card title="Deploy com curl" icon="terminal" href="/pt/examples/deploy-with-curl">

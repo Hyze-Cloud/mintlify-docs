@@ -44,11 +44,11 @@ Creates a PIX invoice for plan checkout.
 
 | Field | Type | Required | Default | Description |
 |-------|------|----------|---------|-------------|
-| `planId` | `string` | Yes | — | Plan ID |
+| `planId` | `string` | Yes | â€” | Plan ID |
 | `interval` | `string` | No | `month` | `month` \| `quarter` \| `semiannual` \| `year` |
 
 ```bash Language=bash
-curl -X POST https://api.hyze.cloud/api/invoices/pix \
+curl -X POST https://api.hyzecloud.com/api/invoices/pix \
   -H "Authorization: Bearer hyze_your_key" \
   -H "Content-Type: application/json" \
   -d '{ "planId": "plan_pro", "interval": "month" }'

@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: Hyze Cloud REST API — base URL, authentication with Bearer API keys, errors, rate limiting, and workspaces.
+description: Hyze Cloud REST API â€” base URL, authentication with Bearer API keys, errors, rate limiting, and workspaces.
 keywords: ["Hyze Cloud API", "REST", "Bearer", "authentication", "rate limit", "openapi"]
 ---
 
@@ -9,7 +9,7 @@ keywords: ["Hyze Cloud API", "REST", "Bearer", "authentication", "rate limit", "
 All API requests are made to:
 
 ```
-https://api.hyze.cloud/api
+https://api.hyzecloud.com/api
 ```
 
 ## Authentication
@@ -61,12 +61,12 @@ When using an API key without a session cookie, workspace-scoped endpoints requi
 ## Examples
 
 ```bash Language=bash
-curl https://api.hyze.cloud/api/apps/ \
+curl https://api.hyzecloud.com/api/apps/ \
   -H "Authorization: Bearer hyze_your_key"
 ```
 
 ```js Language=JavaScript
-const res = await fetch("https://api.hyze.cloud/api/apps/", {
+const res = await fetch("https://api.hyzecloud.com/api/apps/", {
   headers: { Authorization: `Bearer ${process.env.HYZE_API_KEY}` },
 });
 const data = await res.json();
@@ -76,7 +76,7 @@ const data = await res.json();
 import requests
 
 resp = requests.get(
-    "https://api.hyze.cloud/api/apps/",
+    "https://api.hyzecloud.com/api/apps/",
     headers={"Authorization": f"Bearer {HYZE_API_KEY}"},
 )
 data = resp.json()

@@ -14,7 +14,7 @@ Deploy `app.zip` as a Hyze Cloud app.
 ```bash
 export HYZE_API_KEY="hyze_your_key"
 
-curl -X POST https://api.hyze.cloud/api/apps/deploy \
+curl -X POST https://api.hyzecloud.com/api/apps/deploy \
   -H "Authorization: Bearer $HYZE_API_KEY" \
   -F "file=@app.zip" \
   -F "name=my-api" \

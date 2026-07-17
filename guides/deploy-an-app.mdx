@@ -24,7 +24,7 @@ Use the Apps API when you want deployments from CI/CD, internal tooling, or your
   </Step>
   <Step title="Send the deploy request">
     ```bash
-    curl -X POST https://api.hyze.cloud/api/apps/deploy \
+    curl -X POST https://api.hyzecloud.com/api/apps/deploy \
       -H "Authorization: Bearer hyze_your_key" \
       -F "file=@app.zip" \
       -F "name=my-api" \
@@ -36,7 +36,7 @@ Use the Apps API when you want deployments from CI/CD, internal tooling, or your
   </Step>
   <Step title="Watch logs">
     ```bash
-    curl "https://api.hyze.cloud/api/apps/app_001/logs?tail=200&timestamps=true" \
+    curl "https://api.hyzecloud.com/api/apps/app_001/logs?tail=200&timestamps=true" \
       -H "Authorization: Bearer hyze_your_key"
     ```
   </Step>

@@ -3,7 +3,7 @@ title: Fazer deploy de um app
 description: Envie um app Node.js, Bun ou Python com a API da Hyze Cloud.
 ---
 
-Use a API de Apps quando quiser deploys a partir de CI/CD, ferramentas internas ou seu próprio painel de controle.
+Use a API de Apps quando quiser deploys a partir de CI/CD, ferramentas internas ou seu prÃ³prio painel de controle.
 
 ## Escolha uma fonte de deploy
 
@@ -11,8 +11,8 @@ Use a API de Apps quando quiser deploys a partir de CI/CD, ferramentas internas 
   <Card title="Upload ZIP" icon="file-zipper" href="#deploy-from-a-zip">
     Melhor para artefatos de build gerados por CI.
   </Card>
-  <Card title="Repositório GitHub" icon="github" href="#deploy-from-github">
-    Melhor quando a Hyze Cloud deve baixar o código de um repositório conectado.
+  <Card title="RepositÃ³rio GitHub" icon="github" href="#deploy-from-github">
+    Melhor quando a Hyze Cloud deve baixar o cÃ³digo de um repositÃ³rio conectado.
   </Card>
 </CardGroup>
 
@@ -20,11 +20,11 @@ Use a API de Apps quando quiser deploys a partir de CI/CD, ferramentas internas 
 
 <Steps>
   <Step title="Empacote seu app">
-    Crie um ZIP com os arquivos que a Hyze Cloud deve executar. Inclua o entrypoint do seu app e o manifesto de dependências.
+    Crie um ZIP com os arquivos que a Hyze Cloud deve executar. Inclua o entrypoint do seu app e o manifesto de dependÃªncias.
   </Step>
-  <Step title="Envie a requisição de deploy">
+  <Step title="Envie a requisiÃ§Ã£o de deploy">
     ```bash
-    curl -X POST https://api.hyze.cloud/api/apps/deploy \
+    curl -X POST https://api.hyzecloud.com/api/apps/deploy \
       -H "Authorization: Bearer hyze_sua_chave" \
       -F "file=@app.zip" \
       -F "name=my-api" \
@@ -36,7 +36,7 @@ Use a API de Apps quando quiser deploys a partir de CI/CD, ferramentas internas 
   </Step>
   <Step title="Veja os logs">
     ```bash
-    curl "https://api.hyze.cloud/api/apps/app_001/logs?tail=200&timestamps=true" \
+    curl "https://api.hyzecloud.com/api/apps/app_001/logs?tail=200&timestamps=true" \
       -H "Authorization: Bearer hyze_sua_chave"
     ```
   </Step>
@@ -44,7 +44,7 @@ Use a API de Apps quando quiser deploys a partir de CI/CD, ferramentas internas 
 
 ## Deploy pelo GitHub
 
-Use [`POST /api/apps/deploy-from-repo`](/api-reference/apps#deploy-from-github-repo) após conectar o GitHub no Dashboard.
+Use [`POST /api/apps/deploy-from-repo`](/api-reference/apps#deploy-from-github-repo) apÃ³s conectar o GitHub no Dashboard.
 
 ```json
 {
@@ -64,22 +64,22 @@ Use [`POST /api/apps/deploy-from-repo`](/api-reference/apps#deploy-from-github-r
 ```
 
 <Tip>
-  Defina `autoDeploy` como `true` quando quiser que a Hyze Cloud faça redeploy após pushes na branch selecionada.
+  Defina `autoDeploy` como `true` quando quiser que a Hyze Cloud faÃ§a redeploy apÃ³s pushes na branch selecionada.
 </Tip>
 
 ## Checklist de runtimes
 
-| Runtime | Comando típico | Observações |
+| Runtime | Comando tÃ­pico | ObservaÃ§Ãµes |
 | --- | --- | --- |
 | `node` | `node server.js` ou `npm start` | Exponha a mesma porta em que seu servidor escuta. |
-| `bun` | `bun run start` | Mantenha o lockfile no artefato quando possível. |
-| `python` | `python main.py` | Inclua seu arquivo de dependências no ZIP. |
+| `bun` | `bun run start` | Mantenha o lockfile no artefato quando possÃ­vel. |
+| `python` | `python main.py` | Inclua seu arquivo de dependÃªncias no ZIP. |
 
 ## Endpoints relacionados
 
 <CardGroup cols={2}>
-  <Card title="Referência de Apps" icon="cube" href="/api-reference/apps">
-    Deploy, ciclo de vida, logs, configurações e histórico de builds.
+  <Card title="ReferÃªncia de Apps" icon="cube" href="/api-reference/apps">
+    Deploy, ciclo de vida, logs, configuraÃ§Ãµes e histÃ³rico de builds.
   </Card>
   <Card title="Backups de app" icon="box-archive" href="/api-reference/apps-backups">
     Crie, restaure, baixe e exclua backups de apps.

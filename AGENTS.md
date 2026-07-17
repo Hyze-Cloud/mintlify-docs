@@ -20,13 +20,13 @@
 - Company: Hyze Cloud
 - Primary color: `#6d5dd3` (purple)
 - Dashboard: https://app.hyze.cloud
-- API base: https://api.hyze.cloud/api
+- API base: https://api.hyzecloud.com/api
 - GitHub: https://github.com/hyzecloud
 
 ## Style preferences
 
 - Use active voice and second person ("you")
-- Keep sentences concise — one idea per sentence
+- Keep sentences concise â€” one idea per sentence
 - Use sentence case for headings
 - Bold for UI elements: Click **Settings**
 - Code formatting for file names, commands, paths, and code references

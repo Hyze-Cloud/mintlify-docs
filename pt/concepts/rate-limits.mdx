@@ -1,46 +1,46 @@
 ---
 title: Rate limits
-description: Limites de requisição no proxy público e na API da Hyze Cloud. Entenda 429, defaults por IP e host, e a diferença de pause por abuse.
+description: Limites de requisiÃ§Ã£o no proxy pÃºblico e na API da Hyze Cloud. Entenda 429, defaults por IP e host, e a diferenÃ§a de pause por abuse.
 keywords: ["rate limit", "429", "proxy", "Hyze Cloud", "req/s", "Retry-After", "abuse"]
-"og:title": "Rate limits — Hyze Cloud"
-"og:description": "80 req/s por IP e 400 req/s por host no proxy público. Como funciona o 429 e o que não é pause de app."
+"og:title": "Rate limits â€” Hyze Cloud"
+"og:description": "80 req/s por IP e 400 req/s por host no proxy pÃºblico. Como funciona o 429 e o que nÃ£o Ã© pause de app."
 ---
 
-A Hyze Cloud aplica **rate limits** para proteger apps publicados e a própria API. Quando o limite é atingido, a resposta é **`429 Too Many Requests`** — o site continua no ar, só freia o excesso de tráfego.
+A Hyze Cloud aplica **rate limits** para proteger apps publicados e a prÃ³pria API. Quando o limite Ã© atingido, a resposta Ã© **`429 Too Many Requests`** â€” o site continua no ar, sÃ³ freia o excesso de trÃ¡fego.
 
 ## Dois lugares diferentes
 
-| Onde | O que limita | Quando você vê |
+| Onde | O que limita | Quando vocÃª vÃª |
 | --- | --- | --- |
-| **Proxy público** | Tráfego HTTP no subdomínio/domínio do app | Visitantes, bots, load tests no site |
-| **API Hyze** | Chamadas a `api.hyze.cloud` | Deploy, logs, keys, automação |
+| **Proxy pÃºblico** | TrÃ¡fego HTTP no subdomÃ­nio/domÃ­nio do app | Visitantes, bots, load tests no site |
+| **API Hyze** | Chamadas a `api.hyzecloud.com` | Deploy, logs, keys, automaÃ§Ã£o |
 
-Esta página foca no **proxy público** (site/app exposto). A API também pode retornar `429` em alguns endpoints — veja a [introdução da API](/api-reference/introduction).
+Esta pÃ¡gina foca no **proxy pÃºblico** (site/app exposto). A API tambÃ©m pode retornar `429` em alguns endpoints â€” veja a [introduÃ§Ã£o da API](/api-reference/introduction).
 
-## Proxy público (apps com website)
+## Proxy pÃºblico (apps com website)
 
 Todo request a um app publicado passa pelo edge da Hyze:
 
 ```text
-Cliente → proxy Hyze → seu container
+Cliente â†’ proxy Hyze â†’ seu container
 ```
 
 O rate limit roda **no proxy**, antes de chegar no seu processo.
 
-### Limites padrão
+### Limites padrÃ£o
 
 Janela fixa de **1 segundo** (por processo de proxy):
 
-| Dimensão | Default | Significado |
+| DimensÃ£o | Default | Significado |
 | --- | --- | --- |
-| **Por IP + host** | **80 req/s** | Um mesmo cliente (IP) no seu subdomínio |
-| **Por host** | **400 req/s** | Todos os clientes somados naquele subdomínio |
+| **Por IP + host** | **80 req/s** | Um mesmo cliente (IP) no seu subdomÃ­nio |
+| **Por host** | **400 req/s** | Todos os clientes somados naquele subdomÃ­nio |
 
 Exemplos:
 
-- `meu-app.hyzecloud.app` recebe 50 req/s de um IP → ok  
-- O mesmo IP manda **100 req/s** → parte vira **429**  
-- Vários IPs somam **500 req/s** no mesmo host → o teto por host corta o excesso  
+- `meu-app.hyzecloud.app` recebe 50 req/s de um IP â†’ ok  
+- O mesmo IP manda **100 req/s** â†’ parte vira **429**  
+- VÃ¡rios IPs somam **500 req/s** no mesmo host â†’ o teto por host corta o excesso  
 
 ### Resposta 429
 
@@ -48,24 +48,24 @@ Quando o limite estoura:
 
 - **Status:** `429 Too Many Requests`
 - **Header:** `Retry-After` (segundos para tentar de novo)
-- **Headers extras (quando aplicável):** `X-RateLimit-Limit`, `X-RateLimit-Remaining`
-- **HTML:** página simples “Muitas requisições” (visitantes)
+- **Headers extras (quando aplicÃ¡vel):** `X-RateLimit-Limit`, `X-RateLimit-Remaining`
+- **HTML:** pÃ¡gina simples â€œMuitas requisiÃ§Ãµesâ€ (visitantes)
 - **JSON:** corpo com `error: "RATE_LIMITED"` (clientes API/fetch)
 
-Isso é diferente de **503** (app parado, subindo ou sem resposta).
+Isso Ã© diferente de **503** (app parado, subindo ou sem resposta).
 
-| Código | Significado comum na Hyze |
+| CÃ³digo | Significado comum na Hyze |
 | --- | --- |
-| **429** | Tráfego demais — espere e tente de novo |
-| **503** | App indisponível / ainda iniciando / falha de rota |
-| **404** | Subdomínio ou domínio sem app publicado |
+| **429** | TrÃ¡fego demais â€” espere e tente de novo |
+| **503** | App indisponÃ­vel / ainda iniciando / falha de rota |
+| **404** | SubdomÃ­nio ou domÃ­nio sem app publicado |
 
-### Boas práticas
+### Boas prÃ¡ticas
 
-- Faça o app escutar em **`0.0.0.0`** e na porta configurada como **expose**
-- Use **cache** e CDN para assets estáticos quando possível
-- Evite polling agressivo de frontends (prefira intervalos razoáveis ou websocket)
-- Load tests internos contam como tráfego real — o proxy e as proteções de abuse reagem
+- FaÃ§a o app escutar em **`0.0.0.0`** e na porta configurada como **expose**
+- Use **cache** e CDN para assets estÃ¡ticos quando possÃ­vel
+- Evite polling agressivo de frontends (prefira intervalos razoÃ¡veis ou websocket)
+- Load tests internos contam como trÃ¡fego real â€” o proxy e as proteÃ§Ãµes de abuse reagem
 
 ### Rate limit vs abuse (pause)
 
@@ -73,38 +73,38 @@ Isso é diferente de **503** (app parado, subindo ou sem resposta).
 | --- | --- | --- |
 | **Age em** | milissegundos | ~heartbeat (dezenas de segundos) |
 | **Resposta** | 429 no edge | App pode ser **pausado** |
-| **Foco** | quem **bate** no site | app que **gera** abuso de saída (egress) |
-| **Objetivo** | não derrubar o site com flood | não usar a Hyze como origem de ataque |
+| **Foco** | quem **bate** no site | app que **gera** abuso de saÃ­da (egress) |
+| **Objetivo** | nÃ£o derrubar o site com flood | nÃ£o usar a Hyze como origem de ataque |
 
-Os dois se complementam. Rate limit protege o app que **recebe** tráfego; pause por abuse atua em apps que **disparam** conexões em massa de dentro da plataforma.
+Os dois se complementam. Rate limit protege o app que **recebe** trÃ¡fego; pause por abuse atua em apps que **disparam** conexÃµes em massa de dentro da plataforma.
 
 ## API da Hyze Cloud
 
-Alguns endpoints da API (`api.hyze.cloud`) também têm rate limit e retornam `429` com `Retry-After`.
+Alguns endpoints da API (`api.hyzecloud.com`) tambÃ©m tÃªm rate limit e retornam `429` com `Retry-After`.
 
-Recomendações:
+RecomendaÃ§Ãµes:
 
 - Reutilize a mesma API key com cuidado em loops paralelos
 - Respeite `Retry-After` em vez de retentar na hora
-- Prefira webhooks/eventos a polling agressivo quando existir a opção
+- Prefira webhooks/eventos a polling agressivo quando existir a opÃ§Ã£o
 
-Detalhes por endpoint podem variar — consulte a [referência da API](/api-reference/introduction).
+Detalhes por endpoint podem variar â€” consulte a [referÃªncia da API](/api-reference/introduction).
 
-## FAQ rápido
+## FAQ rÃ¡pido
 
-### Meu site legítimo pode levar 429?
+### Meu site legÃ­timo pode levar 429?
 
-Tráfego humano normal e APIs bem comportadas raramente passam de dezenas de req/s por IP. Spikes extremos (load test, bug de retry, scrape) são os casos típicos de 429.
+TrÃ¡fego humano normal e APIs bem comportadas raramente passam de dezenas de req/s por IP. Spikes extremos (load test, bug de retry, scrape) sÃ£o os casos tÃ­picos de 429.
 
 ### Posso desligar o rate limit do meu app?
 
-Os limites do proxy são de **plataforma** (proteção multi-tenant). Não há toggle por app na documentação pública. Planos futuros podem oferecer tetos maiores.
+Os limites do proxy sÃ£o de **plataforma** (proteÃ§Ã£o multi-tenant). NÃ£o hÃ¡ toggle por app na documentaÃ§Ã£o pÃºblica. Planos futuros podem oferecer tetos maiores.
 
 ### 429 significa que meu app foi pausado?
 
-Não. Pause por abuse é outra proteção. Com 429 o app continua rodando; só o excesso de requests é recusado no edge.
+NÃ£o. Pause por abuse Ã© outra proteÃ§Ã£o. Com 429 o app continua rodando; sÃ³ o excesso de requests Ã© recusado no edge.
 
-## Próximos passos
+## PrÃ³ximos passos
 
 <CardGroup cols={2}>
   <Card title="Apps" icon="cube" href="/pt/concepts/apps">

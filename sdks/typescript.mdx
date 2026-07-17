@@ -12,7 +12,7 @@ Create a reusable API helper.
 ## Example
 
 ```ts
-const HYZE_API = "https://api.hyze.cloud/api";
+const HYZE_API = "https://api.hyzecloud.com/api";
 
 async function hyze<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${HYZE_API}${path}`, {

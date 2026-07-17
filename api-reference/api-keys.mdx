@@ -11,7 +11,7 @@ description: Create and manage your API keys.
 Returns all API keys for the authenticated user.
 
 ```bash Language=bash
-curl https://api.hyze.cloud/api/api-keys/ \
+curl https://api.hyzecloud.com/api/api-keys/ \
   -H "Authorization: Bearer hyze_your_key"
 ```
 
@@ -50,7 +50,7 @@ Creates a new API key for your workspace. The full key value is only returned on
 | `metadata` | `object` | No | Arbitrary metadata |
 
 ```bash Language=bash
-curl -X POST https://api.hyze.cloud/api/api-keys/ \
+curl -X POST https://api.hyzecloud.com/api/api-keys/ \
   -H "Authorization: Bearer hyze_your_key" \
   -H "Content-Type: application/json" \
   -d '{ "name": "CI/CD" }'
@@ -81,7 +81,7 @@ Updates an existing API key's name, enabled status, or remaining quota.
 | `metadata` | `object` | No | Update metadata |
 
 ```bash Language=bash
-curl -X PUT https://api.hyze.cloud/api/api-keys/key_abc123 \
+curl -X PUT https://api.hyzecloud.com/api/api-keys/key_abc123 \
   -H "Authorization: Bearer hyze_your_key" \
   -H "Content-Type: application/json" \
   -d '{ "enabled": false }'
@@ -97,6 +97,6 @@ curl -X PUT https://api.hyze.cloud/api/api-keys/key_abc123 \
 Permanently deletes an API key. A security notification is emitted.
 
 ```bash Language=bash
-curl -X DELETE https://api.hyze.cloud/api/api-keys/key_abc123 \
+curl -X DELETE https://api.hyzecloud.com/api/api-keys/key_abc123 \
   -H "Authorization: Bearer hyze_your_key"
 ```

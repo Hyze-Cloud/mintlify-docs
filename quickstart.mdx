@@ -21,7 +21,7 @@ Before you begin, you must have:
 - An API key (starts with `hyze_`)
 
 <Callout type="info">
-  The API base URL is `https://api.hyze.cloud/api`. Keep that prefix in every request.
+  The API base URL is `https://api.hyzecloud.com/api`. Keep that prefix in every request.
 </Callout>
 
 ## Get your API key
@@ -31,10 +31,10 @@ Before you begin, you must have:
     Go to [app.hyze.cloud](https://app.hyze.cloud) and log in.
   </Step>
   <Step title="Navigate to API Keys">
-    Open **Settings → API Keys** and click **Create Key**.
+    Open **Settings â†’ API Keys** and click **Create Key**.
   </Step>
   <Step title="Copy your key">
-    Your key starts with `hyze_`. Copy it — it won't be shown again.
+    Your key starts with `hyze_`. Copy it â€” it won't be shown again.
   </Step>
 </Steps>
 
@@ -43,7 +43,7 @@ Before you begin, you must have:
 <Steps>
   <Step title="List your apps">
     ```bash
-    curl https://api.hyze.cloud/api/apps/ \
+    curl https://api.hyzecloud.com/api/apps/ \
       -H "Authorization: Bearer hyze_your_key"
     ```
 
@@ -64,7 +64,7 @@ Use this snippet to confirm your key is available before wiring it into CI/CD.
 ```bash
 export HYZE_API_KEY="hyze_your_key"
 
-curl https://api.hyze.cloud/api/apps/ \
+curl https://api.hyzecloud.com/api/apps/ \
   -H "Authorization: Bearer $HYZE_API_KEY"
 ```
 

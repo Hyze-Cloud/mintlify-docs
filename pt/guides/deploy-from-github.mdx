@@ -1,22 +1,22 @@
 ---
 title: Deploy pelo GitHub
-description: Faça deploy de um app a partir de um repositório GitHub conectado.
+description: FaÃ§a deploy de um app a partir de um repositÃ³rio GitHub conectado.
 ---
 
-Use deploys por GitHub quando seu código-fonte já estiver em um repositório.
+Use deploys por GitHub quando seu cÃ³digo-fonte jÃ¡ estiver em um repositÃ³rio.
 
 ## Objetivo
 
-Criar um app a partir de um repositório e opcionalmente ativar auto deploys.
+Criar um app a partir de um repositÃ³rio e opcionalmente ativar auto deploys.
 
 ## Quando usar
 
-Use este fluxo para apps de produção, workflows em equipe e deploys por branch.
+Use este fluxo para apps de produÃ§Ã£o, workflows em equipe e deploys por branch.
 
 ## Exemplo
 
 ```bash
-curl -X POST https://api.hyze.cloud/api/apps/deploy-from-repo \
+curl -X POST https://api.hyzecloud.com/api/apps/deploy-from-repo \
   -H "Authorization: Bearer hyze_sua_chave" \
   -H "Content-Type: application/json" \
   -d '{
@@ -42,11 +42,11 @@ A Hyze Cloud baixa a branch selecionada, faz o build do app e inicia com seu `st
   Ative `autoDeploy` para que pushes na branch disparem novos deploys automaticamente.
 </Tip>
 
-## Próximos passos
+## PrÃ³ximos passos
 
 <CardGroup cols={2}>
   <Card title="Ver logs" icon="terminal" href="/pt/guides/view-logs">
-    Inspecione a saída de inicialização e runtime.
+    Inspecione a saÃ­da de inicializaÃ§Ã£o e runtime.
   </Card>
   <Card title="API de Apps" icon="book-open" href="/api-reference/apps">
     Veja todos os endpoints de apps.

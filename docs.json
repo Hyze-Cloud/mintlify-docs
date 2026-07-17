@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Hyze Cloud",
-  "description": "Documentação oficial da Hyze Cloud: deploy de apps Node, Bun e Python, bancos gerenciados, API REST, rate limits, secrets e automação.",
+  "description": "DocumentaÃ§Ã£o oficial da Hyze Cloud: deploy de apps Node, Bun e Python, bancos gerenciados, API REST, rate limits, secrets e automaÃ§Ã£o.",
   "appearance": {
     "default": "dark",
     "strict": true
@@ -30,7 +30,7 @@
       "auth": {
         "method": "bearer"
       },
-      "server": "https://api.hyze.cloud/api"
+      "server": "https://api.hyzecloud.com/api"
     }
   },
   "favicon": {
@@ -55,7 +55,7 @@
       "application-name": "Hyze Cloud Docs",
       "apple-mobile-web-app-title": "Hyze Docs",
       "author": "Hyze Cloud",
-      "keywords": "Hyze Cloud, documentação, API, deploy, Node.js, Bun, Python, PostgreSQL, hosting, PaaS, rate limit, apps, databases, docs.hyzecloud.app",
+      "keywords": "Hyze Cloud, documentaÃ§Ã£o, API, deploy, Node.js, Bun, Python, PostgreSQL, hosting, PaaS, rate limit, apps, databases, docs.hyzecloud.app",
       "category": "Technology"
     },
     "organization": {
@@ -71,7 +71,7 @@
     }
   },
   "search": {
-    "prompt": "Buscar na documentação…"
+    "prompt": "Buscar na documentaÃ§Ã£oâ€¦"
   },
   "metadata": {
     "timestamp": true
@@ -89,7 +89,7 @@
         },
         {
           "anchor": "API Status",
-          "href": "https://api.hyze.cloud/health",
+          "href": "https://api.hyzecloud.com/health",
           "icon": "signal"
         },
         {
@@ -192,10 +192,10 @@
         "default": true,
         "tabs": [
           {
-            "tab": "Introdução",
+            "tab": "IntroduÃ§Ã£o",
             "groups": [
               {
-                "group": "Início",
+                "group": "InÃ­cio",
                 "pages": ["pt/index", "pt/quickstart", "pt/getting-started/authentication"]
               },
               {
@@ -240,7 +240,7 @@
             "tab": "API Reference",
             "groups": [
               {
-                "group": "Visão geral",
+                "group": "VisÃ£o geral",
                 "pages": ["api-reference/introduction"]
               },
               {

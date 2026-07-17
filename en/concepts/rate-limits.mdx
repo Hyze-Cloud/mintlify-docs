@@ -2,27 +2,27 @@
 title: Rate limits
 description: Request limits on the Hyze Cloud public proxy and API. Understand 429 responses, per-IP and per-host defaults, and how this differs from abuse pause.
 keywords: ["rate limit", "429", "proxy", "Hyze Cloud", "req/s", "Retry-After", "abuse"]
-"og:title": "Rate limits — Hyze Cloud"
+"og:title": "Rate limits â€” Hyze Cloud"
 "og:description": "80 req/s per IP and 400 req/s per host on the public proxy. How 429 works and how it differs from app pause."
 ---
 
-Hyze Cloud applies **rate limits** to protect published apps and the platform API. When a limit is hit, clients receive **`429 Too Many Requests`** — the app stays up; excess traffic is throttled at the edge.
+Hyze Cloud applies **rate limits** to protect published apps and the platform API. When a limit is hit, clients receive **`429 Too Many Requests`** â€” the app stays up; excess traffic is throttled at the edge.
 
 ## Two different layers
 
 | Where | What it limits | When you see it |
 | --- | --- | --- |
 | **Public proxy** | HTTP traffic to your app subdomain/domain | Visitors, bots, load tests against your site |
-| **Hyze API** | Calls to `api.hyze.cloud` | Deploy, logs, keys, automation |
+| **Hyze API** | Calls to `api.hyzecloud.com` | Deploy, logs, keys, automation |
 
-This page focuses on the **public proxy** (published websites/apps). The API may also return `429` on some endpoints — see the [API introduction](/api-reference/introduction).
+This page focuses on the **public proxy** (published websites/apps). The API may also return `429` on some endpoints â€” see the [API introduction](/api-reference/introduction).
 
 ## Public proxy (apps with a website)
 
 Every request to a published app goes through the Hyze edge:
 
 ```text
-Client → Hyze proxy → your container
+Client â†’ Hyze proxy â†’ your container
 ```
 
 Rate limiting runs **on the proxy**, before traffic reaches your process.
@@ -38,9 +38,9 @@ Fixed **1 second** window (per proxy process):
 
 Examples:
 
-- `my-app.hyzecloud.app` gets 50 req/s from one IP → allowed  
-- The same IP sends **100 req/s** → overflow gets **429**  
-- Many IPs sum to **500 req/s** on one host → host ceiling kicks in  
+- `my-app.hyzecloud.app` gets 50 req/s from one IP â†’ allowed  
+- The same IP sends **100 req/s** â†’ overflow gets **429**  
+- Many IPs sum to **500 req/s** on one host â†’ host ceiling kicks in  
 
 ### 429 response
 
@@ -49,14 +49,14 @@ When a limit is exceeded:
 - **Status:** `429 Too Many Requests`
 - **Header:** `Retry-After` (seconds to wait)
 - **Extra headers (when applicable):** `X-RateLimit-Limit`, `X-RateLimit-Remaining`
-- **HTML:** simple “Too many requests” page for browsers
+- **HTML:** simple â€œToo many requestsâ€ page for browsers
 - **JSON:** body with `error: "RATE_LIMITED"` for API clients
 
 This is different from **503** (app stopped, still starting, or unreachable).
 
 | Code | Common meaning on Hyze |
 | --- | --- |
-| **429** | Too much traffic — wait and retry |
+| **429** | Too much traffic â€” wait and retry |
 | **503** | App unavailable / starting / routing failure |
 | **404** | Subdomain or domain has no published app |
 
@@ -65,7 +65,7 @@ This is different from **503** (app stopped, still starting, or unreachable).
 - Listen on **`0.0.0.0`** and the configured **expose** port
 - Cache static assets (or use a CDN) when possible
 - Avoid aggressive frontend polling (use reasonable intervals or websockets)
-- Internal load tests count as real traffic — proxy and abuse protections will react
+- Internal load tests count as real traffic â€” proxy and abuse protections will react
 
 ### Rate limit vs abuse (pause)
 
@@ -80,7 +80,7 @@ They complement each other. Rate limit protects the app that **receives** traffi
 
 ## Hyze Cloud API
 
-Some API endpoints (`api.hyze.cloud`) are also rate limited and return `429` with `Retry-After`.
+Some API endpoints (`api.hyzecloud.com`) are also rate limited and return `429` with `Retry-After`.
 
 Recommendations:
 
@@ -88,7 +88,7 @@ Recommendations:
 - Honor `Retry-After` instead of retrying immediately
 - Prefer webhooks/events over aggressive polling when available
 
-Per-endpoint details may vary — see the [API reference](/api-reference/introduction).
+Per-endpoint details may vary â€” see the [API reference](/api-reference/introduction).
 
 ## Quick FAQ
 
