@@ -34,8 +34,8 @@
     }
   },
   "favicon": {
-    "light": "/favicon-light.svg",
-    "dark": "/favicon.svg"
+    "light": "/logo/logo2-light.png",
+    "dark": "/logo/logo2.png"
   },
   "seo": {
     "indexing": "navigable",
