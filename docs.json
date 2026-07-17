@@ -65,7 +65,7 @@
       "logo": "https://docs.hyzecloud.app/logo/logo2.png",
       "sameAs": [
         "https://x.com/hyzecloud",
-        "https://github.com/hyzecloud",
+        "https://github.com/hyze-cloud",
         "https://linkedin.com/company/hyzecloud"
       ]
     }
@@ -84,17 +84,17 @@
       "anchors": [
         {
           "anchor": "Dashboard",
-          "href": "https://app.hyze.cloud",
+          "href": "http://hyzecloud.com/dashboard",
           "icon": "rocket"
         },
         {
-          "anchor": "API Status",
-          "href": "https://api.hyzecloud.com/health",
+          "anchor": "Status",
+          "href": "https://status.hyzecloud.com/",
           "icon": "signal"
         },
         {
           "anchor": "GitHub",
-          "href": "https://github.com/hyzecloud/hyzecloud",
+          "href": "https://github.com/hyze-cloud",
           "icon": "github"
         }
       ]
@@ -136,10 +136,6 @@
                   "en/examples/deploy-with-curl",
                   "en/examples/app-with-database"
                 ]
-              },
-              {
-                "group": "CLI",
-                "pages": ["en/cli/overview"]
               }
             ]
           },
@@ -198,13 +194,13 @@
           "primary": {
             "type": "button",
             "label": "Dashboard",
-            "href": "https://app.hyze.cloud"
+            "href": "http://hyzecloud.com/dashboard"
           }
         },
         "footer": {
           "socials": {
             "x": "https://x.com/hyzecloud",
-            "github": "https://github.com/Hyze-Cloud",
+            "github": "https://github.com/hyze-cloud",
             "linkedin": "https://linkedin.com/company/hyzecloud"
           }
         }
@@ -246,10 +242,6 @@
                   "pt/examples/deploy-with-curl",
                   "pt/examples/app-with-database"
                 ]
-              },
-              {
-                "group": "CLI",
-                "pages": ["pt/cli/overview"]
               }
             ]
           },
@@ -308,13 +300,13 @@
           "primary": {
             "type": "button",
             "label": "Dashboard",
-            "href": "https://app.hyze.cloud"
+            "href": "http://hyzecloud.com/dashboard"
           }
         },
         "footer": {
           "socials": {
             "x": "https://x.com/hyzecloud",
-            "github": "https://github.com/Hyze-Cloud",
+            "github": "https://github.com/hyze-cloud",
             "linkedin": "https://linkedin.com/company/hyzecloud"
           }
         }

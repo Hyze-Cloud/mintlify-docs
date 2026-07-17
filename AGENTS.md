@@ -19,9 +19,9 @@
 
 - Company: Hyze Cloud
 - Primary color: `#6d5dd3` (purple)
-- Dashboard: https://app.hyze.cloud
+- Dashboard: http://hyzecloud.com/dashboard
 - API base: https://api.hyzecloud.com/api
-- GitHub: https://github.com/hyzecloud
+- GitHub: https://github.com/hyze-cloud
 
 ## Style preferences
 

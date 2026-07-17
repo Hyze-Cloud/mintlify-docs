@@ -1,36 +1,36 @@
 ---
 title: Chave de API
-description: Aprenda como funcionam as chaves de API e como criÃ¡-las no dashboard da Hyze Cloud.
+description: Aprenda como funcionam as chaves de API e como criá-las no dashboard da Hyze Cloud.
 icon: key
 ---
 
 <Tip>
-  A **chave de API** Ã© sua credencial de acesso Ã  Hyze Cloud. Ela identifica seu workspace e autoriza cada requisiÃ§Ã£o enviada para a nossa API. **Sem uma chave vÃ¡lida, nenhuma chamada serÃ¡ aceita.**
+  A **chave de API** é sua credencial de acesso à Hyze Cloud. Ela identifica seu workspace e autoriza cada requisição enviada para a nossa API. **Sem uma chave válida, nenhuma chamada será aceita.**
 </Tip>
 
-## O que vocÃª pode fazer com suas chaves
+## O que você pode fazer com suas chaves
 
-As chaves de API sÃ£o gerenciadas diretamente pelo dashboard. Com elas, vocÃª pode:
+As chaves de API são gerenciadas diretamente pelo dashboard. Com elas, você pode:
 
 - Ver todas as chaves ativas do seu workspace
-- Criar novas chaves para diferentes projetos (CI/CD, ambientes internos, automaÃ§Ãµes)
-- Revogar chaves comprometidas ou que nÃ£o estÃ£o mais em uso
+- Criar novas chaves para diferentes projetos (CI/CD, ambientes internos, automações)
+- Revogar chaves comprometidas ou que não estão mais em uso
 
 <Card title="Onde encontrar suas chaves" icon="gear" horizontal>
-  Todas as chaves ficam em **Settings â†’ Developer** no [Dashboard](https://app.hyze.cloud). O painel mostra o nome, o prefixo (`hyze_â€¦`), a Ãºltima utilizaÃ§Ã£o e a data de criaÃ§Ã£o de cada chave.
+  Todas as chaves ficam em **Settings → Developer** no [Dashboard](http://hyzecloud.com/dashboard). O painel mostra o nome, o prefixo (`hyze_…`), a última utilização e a data de criação de cada chave.
 </Card>
 
-<Card title="Erro de autenticaÃ§Ã£o (401)" icon="triangle-exclamation" horizontal>
-  VocÃª receberÃ¡ um **HTTP 401** quando:
+<Card title="Erro de autenticação (401)" icon="triangle-exclamation" horizontal>
+  Você receberá um **HTTP 401** quando:
 
-  - A chave nÃ£o for enviada no header `Authorization`
+  - A chave não for enviada no header `Authorization`
   - A chave estiver incorreta ou tiver sido revogada
-  - O header nÃ£o seguir o formato `Bearer hyze_...`
+  - O header não seguir o formato `Bearer hyze_...`
 </Card>
 
-## Como a autenticaÃ§Ã£o funciona
+## Como a autenticação funciona
 
-Toda requisiÃ§Ã£o para a API da Hyze Cloud deve enviar a chave no header `Authorization` usando o esquema `Bearer`.
+Toda requisição para a API da Hyze Cloud deve enviar a chave no header `Authorization` usando o esquema `Bearer`.
 
 ```http
 Authorization: Bearer hyze_sua_chave
@@ -44,17 +44,17 @@ curl https://api.hyzecloud.com/api/apps/ \
 ```
 
 <Callout type="info">
-  A URL base da API Ã© `https://api.hyzecloud.com/api`. Mantenha esse prefixo em todas as requisiÃ§Ãµes.
+  A URL base da API é `https://api.hyzecloud.com/api`. Mantenha esse prefixo em todas as requisições.
 </Callout>
 
-## Boas prÃ¡ticas de seguranÃ§a
+## Boas práticas de segurança
 
 <Card title="Proteja suas chaves" icon="shield-halved" horizontal>
-  - Armazene suas chaves em variÃ¡veis de ambiente (ex.: `HYZE_API_KEY`)
-  - Nunca publique sua chave em repositÃ³rios, logs ou grupos pÃºblicos
-  - A Hyze Cloud **nunca** solicitarÃ¡ sua chave
+  - Armazene suas chaves em variáveis de ambiente (ex.: `HYZE_API_KEY`)
+  - Nunca publique sua chave em repositórios, logs ou grupos públicos
+  - A Hyze Cloud **nunca** solicitará sua chave
   - Revogue imediatamente qualquer chave que possa ter vazado
-  - Use nomes descritivos para identificar o uso de cada chave ("CI/CD ProduÃ§Ã£o", "Scripts internos")
+  - Use nomes descritivos para identificar o uso de cada chave ("CI/CD Produção", "Scripts internos")
 </Card>
 
 ## Como criar uma chave de API
@@ -63,44 +63,44 @@ Siga os passos abaixo no dashboard:
 
 <Steps>
   <Step title="Acesse o Dashboard">
-    Entre em [app.hyze.cloud](https://app.hyze.cloud) com sua conta da Hyze Cloud.
+    Entre em [hyzecloud.com/dashboard](http://hyzecloud.com/dashboard) com sua conta da Hyze Cloud.
 
     <Card title="Login" icon="right-to-bracket">
-      Se vocÃª ainda nÃ£o tem conta, crie uma gratuitamente em [app.hyze.cloud](https://app.hyze.cloud).
+      Se você ainda não tem conta, crie uma gratuitamente em [hyzecloud.com/dashboard](http://hyzecloud.com/dashboard).
     </Card>
   </Step>
-  <Step title="Abra Settings â†’ Developer">
+  <Step title="Abra Settings → Developer">
     No menu lateral, clique em **Settings** e selecione a aba **Developer**.
 
     <Card title="Painel de API keys" icon="key">
-      O painel lista todas as chaves do seu workspace com nome, prefixo, Ãºltima utilizaÃ§Ã£o e data de criaÃ§Ã£o.
+      O painel lista todas as chaves do seu workspace com nome, prefixo, última utilização e data de criação.
     </Card>
   </Step>
   <Step title="Clique em New key">
-    No canto superior direito do painel de API keys, clique em **New key** para abrir o formulÃ¡rio de criaÃ§Ã£o.
+    No canto superior direito do painel de API keys, clique em **New key** para abrir o formulário de criação.
   </Step>
-  <Step title="DÃª um nome Ã  chave">
-    Use um nome claro que identifique o uso da chave, como "CI/CD ProduÃ§Ã£o" ou "Scripts internos". Esse nome aparece na lista de chaves e ajuda a revogar a chave certa no futuro.
+  <Step title="Dê um nome à chave">
+    Use um nome claro que identifique o uso da chave, como "CI/CD Produção" ou "Scripts internos". Esse nome aparece na lista de chaves e ajuda a revogar a chave certa no futuro.
   </Step>
   <Step title="Copie a chave gerada">
-    A chave completa aparece **apenas uma vez** no formulÃ¡rio. Copie e salve em um gerenciador de segredos (variÃ¡vel de ambiente, vault, etc.).
+    A chave completa aparece **apenas uma vez** no formulário. Copie e salve em um gerenciador de segredos (variável de ambiente, vault, etc.).
   </Step>
 </Steps>
 
 <Callout type="warning">
-  A chave completa Ã© exibida somente no momento da criaÃ§Ã£o. Depois disso, apenas o prefixo (`hyze_â€¦`) fica visÃ­vel no Dashboard. Se vocÃª perder a chave, serÃ¡ preciso revogÃ¡-la e criar uma nova.
+  A chave completa é exibida somente no momento da criação. Depois disso, apenas o prefixo (`hyze_…`) fica visível no Dashboard. Se você perder a chave, será preciso revogá-la e criar uma nova.
 </Callout>
 
-## FaÃ§a sua primeira requisiÃ§Ã£o
+## Faça sua primeira requisição
 
-Depois de criar a chave, vocÃª jÃ¡ pode enviar requisiÃ§Ãµes autenticadas:
+Depois de criar a chave, você já pode enviar requisições autenticadas:
 
 ```bash
 curl https://api.hyzecloud.com/api/apps/ \
   -H "Authorization: Bearer hyze_sua_chave"
 ```
 
-Para guardar a chave em uma variÃ¡vel de ambiente:
+Para guardar a chave em uma variável de ambiente:
 
 ```bash
 export HYZE_API_KEY="hyze_sua_chave"
@@ -110,16 +110,16 @@ curl https://api.hyzecloud.com/api/apps/ \
 ```
 
 <Card title="Nota importante" icon="circle-info">
-  O mesmo endpoint `api.hyzecloud.com` Ã© usado para todos os ambientes. O workspace Ã© determinado automaticamente pela chave de API utilizada na requisiÃ§Ã£o.
+  O mesmo endpoint `api.hyzecloud.com` é usado para todos os ambientes. O workspace é determinado automaticamente pela chave de API utilizada na requisição.
 </Card>
 
-## PrÃ³ximos passos
+## Próximos passos
 
 <CardGroup cols={2}>
-  <Card title="ReferÃªncia de API keys" icon="key" href="/api-reference/api-keys">
+  <Card title="Referência de API keys" icon="key" href="/api-reference/api-keys">
     Criar, listar, atualizar e revogar chaves via API.
   </Card>
   <Card title="Gerenciar secrets" icon="lock" href="/pt/guides/manage-secrets">
-    Armazene chaves e configuraÃ§Ãµes como variÃ¡veis de ambiente dos seus apps.
+    Armazene chaves e configurações como variáveis de ambiente dos seus apps.
   </Card>
 </CardGroup>

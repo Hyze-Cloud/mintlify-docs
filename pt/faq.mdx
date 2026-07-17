@@ -1,49 +1,49 @@
 ---
 title: FAQ
-description: Respostas rÃ¡pidas para perguntas comuns sobre a API da Hyze Cloud.
+description: Respostas rápidas para perguntas comuns sobre a API da Hyze Cloud.
 ---
 
 ## Preciso de uma chave de API?
 
 Sim. Endpoints privados exigem `Authorization: Bearer hyze_sua_chave`.
 
-## Qual Ã© a URL base da API?
+## Qual é a URL base da API?
 
 Use `https://api.hyzecloud.com/api`.
 
-## Quais runtimes sÃ£o suportados?
+## Quais runtimes são suportados?
 
 Apps suportam Node.js, Bun e Python.
 
-## Quais bancos de dados sÃ£o suportados?
+## Quais bancos de dados são suportados?
 
 A Hyze Cloud suporta PostgreSQL, MySQL, MongoDB e Redis.
 
 ## Devo usar a API ou o Dashboard?
 
-Use o Dashboard para operaÃ§Ãµes manuais.
+Use o Dashboard para operações manuais.
 
-Use a API para CI/CD, ferramentas internas e automaÃ§Ã£o.
+Use a API para CI/CD, ferramentas internas e automação.
 
 ## Onde os segredos devem ficar?
 
-Armazene segredos em variÃ¡veis de ambiente do app ou em seu gerenciador de segredos externo.
+Armazene segredos em variáveis de ambiente do app ou em seu gerenciador de segredos externo.
 
-Nunca os commite no controle de versÃ£o.
+Nunca os commite no controle de versão.
 
 ## O que significa HTTP 429 no meu site?
 
-A Hyze aplica **rate limit no proxy pÃºblico**. Muitas requisiÃ§Ãµes do mesmo IP (ou trÃ¡fego total alto no subdomÃ­nio) retornam `429` com `Retry-After`.
+A Hyze aplica **rate limit no proxy público**. Muitas requisições do mesmo IP (ou tráfego total alto no subdomínio) retornam `429` com `Retry-After`.
 
-Isso **nÃ£o** significa que o app foi pausado â€” o processo continua rodando. Veja [Rate limits](/pt/concepts/rate-limits).
+Isso **não** significa que o app foi pausado — o processo continua rodando. Veja [Rate limits](/pt/concepts/rate-limits).
 
-## PrÃ³ximos passos
+## Próximos passos
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="bolt" href="/pt/quickstart">
-    FaÃ§a sua primeira requisiÃ§Ã£o.
+    Faça sua primeira requisição.
   </Card>
-  <Card title="AutenticaÃ§Ã£o" icon="key" href="/pt/getting-started/authentication">
-    Aprenda autenticaÃ§Ã£o com chave de API.
+  <Card title="Autenticação" icon="key" href="/pt/getting-started/authentication">
+    Aprenda autenticação com chave de API.
   </Card>
 </CardGroup>
