@@ -1,6 +1,9 @@
 ---
 title: Rate limits
-description: Request limits on Hyze Cloud public proxy and API.
+description: Request limits on the Hyze Cloud public proxy and API. Understand 429 responses, per-IP and per-host defaults, and how this differs from abuse pause.
+keywords: ["rate limit", "429", "proxy", "Hyze Cloud", "req/s", "Retry-After", "abuse"]
+"og:title": "Rate limits — Hyze Cloud"
+"og:description": "80 req/s per IP and 400 req/s per host on the public proxy. How 429 works and how it differs from app pause."
 ---
 
 Hyze Cloud applies **rate limits** to protect published apps and the platform API. When a limit is hit, clients receive **`429 Too Many Requests`** — the app stays up; excess traffic is throttled at the edge.

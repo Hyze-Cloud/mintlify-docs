@@ -2,14 +2,15 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Hyze Cloud",
+  "description": "Documentação oficial da Hyze Cloud: deploy de apps Node, Bun e Python, bancos gerenciados, API REST, rate limits, secrets e automação.",
   "appearance": {
     "default": "dark",
     "strict": true
   },
   "colors": {
-    "primary": "#6d5dd3",
-    "light": "#6d5dd3",
-    "dark": "#6d5dd3"
+    "primary": "#7c46ce",
+    "light": "#8b5cf6",
+    "dark": "#7c46ce"
   },
   "api": {
     "openapi": {
@@ -32,7 +33,52 @@
       "server": "https://api.hyze.cloud/api"
     }
   },
-  "favicon": "/favicon.svg",
+  "favicon": {
+    "light": "/favicon-light.svg",
+    "dark": "/favicon.svg"
+  },
+  "seo": {
+    "indexing": "navigable",
+    "metatags": {
+      "robots": "index, follow",
+      "googlebot": "index, follow",
+      "canonical": "https://docs.hyzecloud.app",
+      "og:url": "https://docs.hyzecloud.app",
+      "og:site_name": "Hyze Cloud Docs",
+      "og:type": "website",
+      "og:locale": "pt_BR",
+      "og:locale:alternate": "en_US",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@hyzecloud",
+      "twitter:creator": "@hyzecloud",
+      "theme-color": "#7c46ce",
+      "application-name": "Hyze Cloud Docs",
+      "apple-mobile-web-app-title": "Hyze Docs",
+      "author": "Hyze Cloud",
+      "keywords": "Hyze Cloud, documentação, API, deploy, Node.js, Bun, Python, PostgreSQL, hosting, PaaS, rate limit, apps, databases, docs.hyzecloud.app",
+      "category": "Technology"
+    },
+    "organization": {
+      "id": "https://docs.hyzecloud.app/#organization",
+      "name": "Hyze Cloud",
+      "url": "https://hyzecloud.app",
+      "logo": "https://docs.hyzecloud.app/logo/logo2.png",
+      "sameAs": [
+        "https://x.com/hyzecloud",
+        "https://github.com/hyzecloud",
+        "https://linkedin.com/company/hyzecloud"
+      ]
+    }
+  },
+  "search": {
+    "prompt": "Buscar na documentação…"
+  },
+  "metadata": {
+    "timestamp": true
+  },
+  "thumbnails": {
+    "background": "/images/hero-background.png"
+  },
   "navigation": {
     "global": {
       "anchors": [
