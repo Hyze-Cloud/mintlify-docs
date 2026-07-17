@@ -49,6 +49,8 @@ When an error occurs:
 
 Some endpoints enforce rate limits and will return `429 Too Many Requests` with a `Retry-After` header.
 
+Published apps are also rate limited on the **public proxy** (per IP and per host). See [Rate limits](/en/concepts/rate-limits) for defaults and how this differs from API limits.
+
 ## Workspaces
 
 Most endpoints require an active workspace. Workspaces are set via the web dashboard or via `POST /api/auth/set-active-organization` before using the API key.

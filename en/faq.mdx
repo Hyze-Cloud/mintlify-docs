@@ -31,6 +31,12 @@ Store secrets in app environment variables or your external secret manager.
 
 Never commit them to source control.
 
+## What does HTTP 429 mean on my website?
+
+Hyze applies a **public proxy rate limit**. Too many requests from the same IP (or high total traffic on a subdomain) return `429` with `Retry-After`.
+
+This does **not** mean your app was paused — the process keeps running. See [Rate limits](/en/concepts/rate-limits).
+
 ## Next steps
 
 <CardGroup cols={2}>

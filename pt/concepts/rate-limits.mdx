@@ -1,0 +1,119 @@
+---
+title: Rate limits
+description: Limites de requisição no proxy público e na API da Hyze Cloud.
+---
+
+A Hyze Cloud aplica **rate limits** para proteger apps publicados e a própria API. Quando o limite é atingido, a resposta é **`429 Too Many Requests`** — o site continua no ar, só freia o excesso de tráfego.
+
+## Dois lugares diferentes
+
+| Onde | O que limita | Quando você vê |
+| --- | --- | --- |
+| **Proxy público** | Tráfego HTTP no subdomínio/domínio do app | Visitantes, bots, load tests no site |
+| **API Hyze** | Chamadas a `api.hyze.cloud` | Deploy, logs, keys, automação |
+
+Esta página foca no **proxy público** (site/app exposto). A API também pode retornar `429` em alguns endpoints — veja a [introdução da API](/api-reference/introduction).
+
+## Proxy público (apps com website)
+
+Todo request a um app publicado passa pelo edge da Hyze:
+
+```text
+Cliente → proxy Hyze → seu container
+```
+
+O rate limit roda **no proxy**, antes de chegar no seu processo.
+
+### Limites padrão
+
+Janela fixa de **1 segundo** (por processo de proxy):
+
+| Dimensão | Default | Significado |
+| --- | --- | --- |
+| **Por IP + host** | **80 req/s** | Um mesmo cliente (IP) no seu subdomínio |
+| **Por host** | **400 req/s** | Todos os clientes somados naquele subdomínio |
+
+Exemplos:
+
+- `meu-app.hyzecloud.app` recebe 50 req/s de um IP → ok  
+- O mesmo IP manda **100 req/s** → parte vira **429**  
+- Vários IPs somam **500 req/s** no mesmo host → o teto por host corta o excesso  
+
+### Resposta 429
+
+Quando o limite estoura:
+
+- **Status:** `429 Too Many Requests`
+- **Header:** `Retry-After` (segundos para tentar de novo)
+- **Headers extras (quando aplicável):** `X-RateLimit-Limit`, `X-RateLimit-Remaining`
+- **HTML:** página simples “Muitas requisições” (visitantes)
+- **JSON:** corpo com `error: "RATE_LIMITED"` (clientes API/fetch)
+
+Isso é diferente de **503** (app parado, subindo ou sem resposta).
+
+| Código | Significado comum na Hyze |
+| --- | --- |
+| **429** | Tráfego demais — espere e tente de novo |
+| **503** | App indisponível / ainda iniciando / falha de rota |
+| **404** | Subdomínio ou domínio sem app publicado |
+
+### Boas práticas
+
+- Faça o app escutar em **`0.0.0.0`** e na porta configurada como **expose**
+- Use **cache** e CDN para assets estáticos quando possível
+- Evite polling agressivo de frontends (prefira intervalos razoáveis ou websocket)
+- Load tests internos contam como tráfego real — o proxy e as proteções de abuse reagem
+
+### Rate limit vs abuse (pause)
+
+| | Rate limit (proxy) | Abuse / pause |
+| --- | --- | --- |
+| **Age em** | milissegundos | ~heartbeat (dezenas de segundos) |
+| **Resposta** | 429 no edge | App pode ser **pausado** |
+| **Foco** | quem **bate** no site | app que **gera** abuso de saída (egress) |
+| **Objetivo** | não derrubar o site com flood | não usar a Hyze como origem de ataque |
+
+Os dois se complementam. Rate limit protege o app que **recebe** tráfego; pause por abuse atua em apps que **disparam** conexões em massa de dentro da plataforma.
+
+## API da Hyze Cloud
+
+Alguns endpoints da API (`api.hyze.cloud`) também têm rate limit e retornam `429` com `Retry-After`.
+
+Recomendações:
+
+- Reutilize a mesma API key com cuidado em loops paralelos
+- Respeite `Retry-After` em vez de retentar na hora
+- Prefira webhooks/eventos a polling agressivo quando existir a opção
+
+Detalhes por endpoint podem variar — consulte a [referência da API](/api-reference/introduction).
+
+## FAQ rápido
+
+### Meu site legítimo pode levar 429?
+
+Tráfego humano normal e APIs bem comportadas raramente passam de dezenas de req/s por IP. Spikes extremos (load test, bug de retry, scrape) são os casos típicos de 429.
+
+### Posso desligar o rate limit do meu app?
+
+Os limites do proxy são de **plataforma** (proteção multi-tenant). Não há toggle por app na documentação pública. Planos futuros podem oferecer tetos maiores.
+
+### 429 significa que meu app foi pausado?
+
+Não. Pause por abuse é outra proteção. Com 429 o app continua rodando; só o excesso de requests é recusado no edge.
+
+## Próximos passos
+
+<CardGroup cols={2}>
+  <Card title="Apps" icon="cube" href="/pt/concepts/apps">
+    O que um app inclui e como configurar.
+  </Card>
+  <Card title="Deploy de um app" icon="rocket" href="/pt/guides/deploy-an-app">
+    Publique e exponha a porta correta.
+  </Card>
+  <Card title="Ver logs" icon="scroll" href="/pt/guides/view-logs">
+    Depure o processo do app.
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/pt/faq">
+    Outras perguntas comuns.
+  </Card>
+</CardGroup>

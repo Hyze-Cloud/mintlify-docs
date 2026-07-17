@@ -81,7 +81,8 @@
                   "en/concepts/apps",
                   "en/concepts/databases",
                   "en/concepts/workspaces",
-                  "en/concepts/secrets-and-env"
+                  "en/concepts/secrets-and-env",
+                  "en/concepts/rate-limits"
                 ]
               },
               {
@@ -168,7 +169,8 @@
                   "pt/concepts/apps",
                   "pt/concepts/databases",
                   "pt/concepts/workspaces",
-                  "pt/concepts/secrets-and-env"
+                  "pt/concepts/secrets-and-env",
+                  "pt/concepts/rate-limits"
                 ]
               },
               {

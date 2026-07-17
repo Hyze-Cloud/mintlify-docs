@@ -1,0 +1,119 @@
+---
+title: Rate limits
+description: Request limits on Hyze Cloud public proxy and API.
+---
+
+Hyze Cloud applies **rate limits** to protect published apps and the platform API. When a limit is hit, clients receive **`429 Too Many Requests`** — the app stays up; excess traffic is throttled at the edge.
+
+## Two different layers
+
+| Where | What it limits | When you see it |
+| --- | --- | --- |
+| **Public proxy** | HTTP traffic to your app subdomain/domain | Visitors, bots, load tests against your site |
+| **Hyze API** | Calls to `api.hyze.cloud` | Deploy, logs, keys, automation |
+
+This page focuses on the **public proxy** (published websites/apps). The API may also return `429` on some endpoints — see the [API introduction](/api-reference/introduction).
+
+## Public proxy (apps with a website)
+
+Every request to a published app goes through the Hyze edge:
+
+```text
+Client → Hyze proxy → your container
+```
+
+Rate limiting runs **on the proxy**, before traffic reaches your process.
+
+### Default limits
+
+Fixed **1 second** window (per proxy process):
+
+| Dimension | Default | Meaning |
+| --- | --- | --- |
+| **Per IP + host** | **80 req/s** | One client IP against one subdomain |
+| **Per host** | **400 req/s** | All clients combined on that subdomain |
+
+Examples:
+
+- `my-app.hyzecloud.app` gets 50 req/s from one IP → allowed  
+- The same IP sends **100 req/s** → overflow gets **429**  
+- Many IPs sum to **500 req/s** on one host → host ceiling kicks in  
+
+### 429 response
+
+When a limit is exceeded:
+
+- **Status:** `429 Too Many Requests`
+- **Header:** `Retry-After` (seconds to wait)
+- **Extra headers (when applicable):** `X-RateLimit-Limit`, `X-RateLimit-Remaining`
+- **HTML:** simple “Too many requests” page for browsers
+- **JSON:** body with `error: "RATE_LIMITED"` for API clients
+
+This is different from **503** (app stopped, still starting, or unreachable).
+
+| Code | Common meaning on Hyze |
+| --- | --- |
+| **429** | Too much traffic — wait and retry |
+| **503** | App unavailable / starting / routing failure |
+| **404** | Subdomain or domain has no published app |
+
+### Best practices
+
+- Listen on **`0.0.0.0`** and the configured **expose** port
+- Cache static assets (or use a CDN) when possible
+- Avoid aggressive frontend polling (use reasonable intervals or websockets)
+- Internal load tests count as real traffic — proxy and abuse protections will react
+
+### Rate limit vs abuse (pause)
+
+| | Rate limit (proxy) | Abuse / pause |
+| --- | --- | --- |
+| **Reacts in** | milliseconds | ~heartbeat (tens of seconds) |
+| **Response** | 429 at the edge | App may be **paused** |
+| **Focus** | who **hits** the site | apps that **generate** heavy outbound traffic |
+| **Goal** | keep the site up under flood | stop the platform being used as an attack source |
+
+They complement each other. Rate limit protects the app that **receives** traffic; abuse pause acts on apps that **originate** mass connections from inside the platform.
+
+## Hyze Cloud API
+
+Some API endpoints (`api.hyze.cloud`) are also rate limited and return `429` with `Retry-After`.
+
+Recommendations:
+
+- Be careful with parallel loops using the same API key
+- Honor `Retry-After` instead of retrying immediately
+- Prefer webhooks/events over aggressive polling when available
+
+Per-endpoint details may vary — see the [API reference](/api-reference/introduction).
+
+## Quick FAQ
+
+### Can legitimate traffic get 429?
+
+Normal human traffic and well-behaved APIs rarely exceed tens of req/s per IP. Extreme spikes (load tests, retry bugs, scrapers) are the usual 429 cases.
+
+### Can I disable rate limits for my app?
+
+Proxy limits are **platform-level** (multi-tenant protection). There is no public per-app toggle. Higher tiers may offer higher ceilings in the future.
+
+### Does 429 mean my app was paused?
+
+No. Abuse pause is a separate control. With 429 your app keeps running; only excess requests are rejected at the edge.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Apps" icon="cube" href="/en/concepts/apps">
+    What an app includes and how to configure it.
+  </Card>
+  <Card title="Deploy an app" icon="rocket" href="/en/guides/deploy-an-app">
+    Publish and expose the correct port.
+  </Card>
+  <Card title="View logs" icon="scroll" href="/en/guides/view-logs">
+    Debug your app process.
+  </Card>
+  <Card title="FAQ" icon="circle-question" href="/en/faq">
+    More common questions.
+  </Card>
+</CardGroup>

@@ -31,6 +31,12 @@ Armazene segredos em variáveis de ambiente do app ou em seu gerenciador de segr
 
 Nunca os commite no controle de versão.
 
+## O que significa HTTP 429 no meu site?
+
+A Hyze aplica **rate limit no proxy público**. Muitas requisições do mesmo IP (ou tráfego total alto no subdomínio) retornam `429` com `Retry-After`.
+
+Isso **não** significa que o app foi pausado — o processo continua rodando. Veja [Rate limits](/pt/concepts/rate-limits).
+
 ## Próximos passos
 
 <CardGroup cols={2}>
