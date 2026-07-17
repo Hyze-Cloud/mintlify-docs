@@ -1,77 +1,53 @@
 ---
-title: Hyze Cloud Docs — API, deploys, and databases
-description: Official Hyze Cloud documentation. Deploy Node, Bun, and Python apps, managed databases, REST API, rate limits, secrets, and automation.
-keywords: ["Hyze Cloud", "documentation", "API", "deploy", "Node.js", "Bun", "Python", "PostgreSQL", "PaaS", "hosting"]
-"og:title": "Hyze Cloud Documentation"
-"og:description": "Deploy apps, managed databases, and REST API. Official Hyze Cloud docs."
-mode: custom
+title: Introduction
+description: Deploy apps, manage databases, and automate infrastructure with the Hyze Cloud API.
 ---
 
-<div style={{ position: 'relative', overflow: 'hidden', padding: '92px 20px 86px', textAlign: 'center', borderBottom: '1px solid rgba(255,255,255,0.08)', background: '#0d0d0d' }}>
-  <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', isolation: 'isolate' }}>
-    <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(90deg, rgba(28,28,28,0.92) 0%, rgba(28,28,28,0.46) 18%, rgba(28,28,28,0) 42%, rgba(28,28,28,0) 58%, rgba(28,28,28,0.46) 82%, rgba(28,28,28,0.92) 100%), url("/images/hero-background.png")', backgroundSize: 'cover, cover', backgroundPosition: 'center, center', backgroundRepeat: 'no-repeat', opacity: 0.3, filter: 'grayscale(1)', mixBlendMode: 'luminosity' }} />
-    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(13,13,13,0.7) 0%, rgba(13,13,13,0) 46%, rgba(13,13,13,0.7) 100%)' }} />
-    <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at center, rgba(250,250,250,0.02) 0%, transparent 100%)' }} />
-  </div>
-  <div style={{ position: 'relative', maxWidth: 920, margin: '0 auto' }}>
-    <h1 style={{ margin: 0, color: '#fff', fontSize: 48, lineHeight: 1.06, fontWeight: 700, letterSpacing: '-0.04em' }}>Welcome to the Hyze Cloud API</h1>
-    <p style={{ maxWidth: 760, margin: '20px auto 0', color: 'rgba(255,255,255,0.72)', fontSize: 19, lineHeight: 1.7, fontWeight: 300 }}>
-      The fastest way to deploy apps, create databases, and automate infrastructure with a simple API.
-    </p>
+Hyze Cloud is a PaaS for running **Node.js**, **Bun**, and **Python** apps, plus managed databases — via dashboard or REST API.
 
-  </div>
-</div>
+## Start here
 
-<div style={{ padding: '62px 20px', maxWidth: 1120, margin: '0 auto', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-  <h2 style={{ fontSize: 24, fontWeight: 650, marginBottom: 24, color: '#fff' }}>Start by goal</h2>
-  <CardGroup cols={3}>
-    <Card title="Deploy an app" icon="rocket" href="/en/guides/deploy-an-app">
-      Upload a ZIP artifact and run Node.js, Bun, or Python.
-    </Card>
-    <Card title="Provision a database" icon="database" href="/en/guides/provision-a-database">
-      Create PostgreSQL, MySQL, MongoDB, or Redis.
-    </Card>
-    <Card title="Set environment variables" icon="key" href="/en/guides/manage-secrets">
-      Store `DATABASE_URL`, API keys, and runtime config.
-    </Card>
-    <Card title="View logs" icon="terminal" href="/en/guides/view-logs">
-      Debug startup failures and runtime output.
-    </Card>
-    <Card title="Use TypeScript" icon="code" href="/en/sdks/typescript">
-      Start with a small typed API helper.
-    </Card>
-  </CardGroup>
-</div>
+| Step | What to do |
+| --- | --- |
+| 1 | [Create an API key](/en/getting-started/authentication) |
+| 2 | [Make your first request](/en/quickstart) |
+| 3 | [Deploy an app](/en/guides/deploy-an-app) or [use the SDK](/en/sdks/typescript) |
 
-<div style={{ padding: '62px 20px', maxWidth: 1120, margin: '0 auto', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-  <h2 style={{ fontSize: 24, fontWeight: 650, marginBottom: 24, color: '#fff' }}>Core concepts</h2>
-  <CardGroup cols={4}>
-    <Card title="Apps" icon="cube" href="/en/concepts/apps">
-      Deployable services that run your code.
-    </Card>
-    <Card title="Databases" icon="database" href="/en/concepts/databases">
-      Managed PostgreSQL, MySQL, MongoDB, and Redis.
-    </Card>
-    <Card title="Workspaces" icon="users" href="/en/concepts/workspaces">
-      Resource and team boundaries.
-    </Card>
-    <Card title="Secrets" icon="key" href="/en/concepts/secrets-and-env">
-      Runtime configuration outside source code.
-    </Card>
-  </CardGroup>
-</div>
+## Paths
 
-<div style={{ padding: '62px 20px', maxWidth: 1120, margin: '0 auto' }}>
-  <h2 style={{ fontSize: 28, fontWeight: 700, marginBottom: 24, color: '#fff' }}>Reference and support</h2>
-  <CardGroup cols={3}>
-    <Card title="API reference" icon="book-open" href="/api-reference/introduction">
-      Base URL, authentication, response format, and endpoints.
-    </Card>
-    <Card title="Examples" icon="code" href="/en/examples/deploy-with-curl">
-      Copy complete curl flows into your scripts.
-    </Card>
-    <Card title="FAQ" icon="circle-question" href="/en/faq">
-      Short answers to common integration questions.
-    </Card>
-  </CardGroup>
-</div>
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" href="/en/quickstart">
+    First authenticated request in a few minutes.
+  </Card>
+  <Card title="Node.js SDK" icon="code" href="/en/sdks/typescript">
+    Official `@hyzecloud/sdk` for Node and Bun.
+  </Card>
+  <Card title="Guides" icon="book" href="/en/guides/deploy-an-app">
+    Deploy, databases, secrets, logs.
+  </Card>
+  <Card title="API Reference" icon="terminal" href="/api-reference/introduction">
+    Every endpoint, interactive playground.
+  </Card>
+</CardGroup>
+
+## Base URL
+
+```text
+https://api.hyzecloud.com/api
+```
+
+Authenticate with a Bearer token:
+
+```http
+Authorization: Bearer hyze_your_key
+```
+
+## What you can build
+
+- **Apps** — deploy from ZIP or GitHub, manage env, logs, backups  
+- **Databases** — PostgreSQL, MySQL, MongoDB, Redis  
+- **Automation** — API keys, invoices, plans, GitHub integration  
+
+## Dashboard
+
+Manage resources in the UI at [app.hyze.cloud](https://app.hyze.cloud). Use the API when you want CI/CD, scripts, or custom tooling.

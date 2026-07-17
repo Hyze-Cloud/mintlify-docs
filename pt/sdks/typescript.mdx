@@ -1,12 +1,16 @@
 ---
 title: TypeScript / Node / Bun
-description: SDK oficial @hyzecloud/sdk para Node.js e Bun â€” cliente tipado da API Hyze Cloud.
-keywords: ["Hyze Cloud", "SDK", "TypeScript", "Node.js", "Bun", "API client"]
+description: SDK oficial @hyzecloud/sdk para Node.js e Bun — cliente tipado da API Hyze Cloud.
+keywords: ["Hyze Cloud", "SDK", "TypeScript", "Node.js", "Bun", "API client", "@hyzecloud/sdk"]
 ---
 
-Use o pacote oficial **`@hyzecloud/sdk`** no Node.js 18+ ou Bun.
+Pacote oficial **`@hyzecloud/sdk`** para **Node.js 18+** e **Bun**.
 
-## InstalaÃ§Ã£o
+- Zero dependências de runtime (`fetch` nativo)
+- Helpers tipados para apps, databases, API keys, invoices, GitHub, plans
+- `HyzeError` consistente com status, code e `Retry-After`
+
+## Instalação
 
 ```bash
 npm install @hyzecloud/sdk
@@ -21,10 +25,12 @@ import { HyzeCloud, HyzeError } from "@hyzecloud/sdk";
 
 const hyze = new HyzeCloud({
   apiKey: process.env.HYZE_API_KEY, // hyze_...
+  // baseUrl: "https://api.hyzecloud.com/api", // default
+  // workspaceId: "org_...", // opcional
 });
 
 const { apps } = await hyze.apps.list();
-console.log(apps);
+console.log(apps.map((a) => `${a.name} (${a.status})`));
 
 try {
   await hyze.apps.restart("app_001");
@@ -35,69 +41,168 @@ try {
       console.error("Tente de novo em", err.retryAfterSeconds, "s");
     }
   }
+  throw err;
 }
 ```
 
-## ConfiguraÃ§Ã£o
+## Configuração
 
-| OpÃ§Ã£o | Default | DescriÃ§Ã£o |
+| Opção | Default | Descrição |
 | --- | --- | --- |
 | `apiKey` | `process.env.HYZE_API_KEY` | Bearer token (`hyze_...`) |
 | `baseUrl` | `https://api.hyzecloud.com/api` | URL base da API |
-| `workspaceId` | â€” | Escopo de workspace (opcional) |
-| `fetch` | `fetch` global | ImplementaÃ§Ã£o custom de fetch |
-| `headers` | â€” | Headers extras em toda request |
+| `workspaceId` | — | Escopo de workspace (opcional) |
+| `fetch` | `fetch` global | Implementação custom de fetch |
+| `headers` | — | Headers extras em toda request |
+| `signal` | — | `AbortSignal` padrão |
 
-## Fluxos comuns
+### Variáveis de ambiente
 
-### Deploy de um ZIP
+| Variável | Descrição |
+| --- | --- |
+| `HYZE_API_KEY` | API key padrão se `apiKey` for omitido |
+| `HYZE_API_URL` | Override da URL base |
+
+Crie a key no [dashboard](https://app.hyze.cloud) ou via API. Veja [Autenticação](/pt/getting-started/authentication).
+
+## Apps
+
+```ts
+// Listar / obter
+const list = await hyze.apps.list();
+const detail = await hyze.apps.get("app_001");
+// detail.container: status, publicUrl, stats, runtime, ...
+
+// Lifecycle
+await hyze.apps.start("app_001");
+await hyze.apps.stop("app_001");
+await hyze.apps.restart("app_001");
+
+// Logs e env
+await hyze.apps.logs("app_001", { tail: 200, timestamps: true });
+await hyze.apps.getEnv("app_001");
+await hyze.apps.setEnv("app_001", {
+  APP_ENV: "production",
+  LOG_LEVEL: "info",
+});
+
+// Settings
+await hyze.apps.updateSettings("app_001", {
+  name: "my-api",
+  memoryMB: 512,
+  autoRestart: true,
+});
+```
+
+### Deploy a partir de ZIP
+
+Com porta exposta, o **subdomain deve ser o host completo** no domínio da plataforma (ex.: `my-api.hyzecloud.app`), não só o prefixo.
 
 ```ts
 import { readFileSync } from "node:fs";
-import { HyzeCloud } from "@hyzecloud/sdk";
-
-const hyze = new HyzeCloud({ apiKey: process.env.HYZE_API_KEY });
 
 await hyze.apps.deployFromZip({
   file: readFileSync("./app.zip"),
   name: "my-api",
-  runtime: "node",
+  runtime: "node", // "node" | "bun" | "python"
   memoryMB: 512,
   startupCommand: "node server.js",
   exposePort: 3000,
+  subdomain: "my-api.hyzecloud.app",
+  envVars: {
+    APP_ENV: "production",
+  },
 });
 ```
 
-### Provisionar database
+### Deploy a partir do GitHub
+
+```ts
+await hyze.apps.deployFromRepo({
+  name: "my-api",
+  runtime: "bun",
+  memoryMB: 512,
+  startupCommand: "bun run src/index.ts",
+  exposePort: 3000,
+  subdomain: "my-api.hyzecloud.app",
+  repository: {
+    id: 123,
+    owner: "acme",
+    name: "api",
+    branch: "main",
+  },
+});
+```
+
+### Backups de app
+
+```ts
+await hyze.apps.createBackup("app_001");
+await hyze.apps.listBackups("app_001");
+await hyze.apps.restoreBackup("app_001", "backup_001");
+```
+
+### Regras de env vars
+
+A API rejeita chaves reservadas como `NODE_ENV`, `PORT`, `PATH`, `HOME` e prefixos como `HYZE_`, `DOCKER_`, `AWS_`. Prefira nomes da aplicação (`APP_ENV`, `DATABASE_URL`, …).
+
+## Databases
 
 ```ts
 await hyze.databases.create({
   name: "prod-postgres",
-  engine: "postgresql",
+  engine: "postgresql", // postgresql | mysql | mongodb | redis
   memoryMB: 1024,
   storageGB: 20,
 });
+
+const { databases } = await hyze.databases.list();
+await hyze.databases.get("db_001");
+await hyze.databases.stats("db_001");
+await hyze.databases.logs("db_001", { tail: 100 });
+
+await hyze.databases.start("db_001");
+await hyze.databases.stop("db_001");
+
+await hyze.databases.createBackup("db_001");
+await hyze.databases.listBackups("db_001");
 ```
 
-### Logs e env
+## API keys, invoices, GitHub, plans
 
 ```ts
-await hyze.apps.logs("app_001", { tail: 200, timestamps: true });
-await hyze.apps.setEnv("app_001", { NODE_ENV: "production" });
+const { keys } = await hyze.apiKeys.list();
+const created = await hyze.apiKeys.create({ name: "ci" });
+// created.key.key — secret de uso único (só no create)
+
+const { invoices } = await hyze.invoices.list();
+const pix = await hyze.invoices.createPix({
+  planId: "pro",
+  interval: "month",
+});
+// pix.invoice.brCode / brCodeBase64
+
+await hyze.github.status();
+await hyze.github.repos();
+
+const current = await hyze.plans.current();
+// current.plan + current.usage
 ```
 
-## Recursos
+## Mapa de recursos
 
-| Recurso | Exemplos |
+| Recurso | Métodos |
 | --- | --- |
-| `hyze.apps` | list, get, deploy, start/stop/restart, logs, env, backups |
-| `hyze.databases` | create, list, start/stop, backups, stats |
+| `hyze.apps` | list, get, delete, start, stop, restart, logs, builds, getEnv, setEnv, updateSettings, deployFromZip, deployFromRepo, inspectEnv, createBackup, listBackups, restoreBackup, downloadBackup |
+| `hyze.databases` | list, get, create, delete, updateSettings, stats, logs, start, stop, rotatePassword, createBackup, listBackups, downloadBackup, restore, operations |
 | `hyze.apiKeys` | list, create, update, delete |
 | `hyze.invoices` | list, createPix, status |
-| `hyze.github` | status, repos, branches, detectRuntime |
+| `hyze.github` | status, repos, branches, detectRuntime, … |
 | `hyze.plans` | current, list |
 
-## Requests de baixo nÃ­vel
+## Requests de baixo nível
+
+Qualquer path sob a base da API:
 
 ```ts
 await hyze.get("/apps/");
@@ -110,32 +215,39 @@ await hyze.request("/apps/", {
 
 ## Erros
 
-`HyzeError` Ã© lanÃ§ado em respostas nÃ£o-2xx:
+`HyzeError` é lançado em respostas não-2xx (e em alguns bodies de erro com 200):
 
-| Propriedade | DescriÃ§Ã£o |
+| Propriedade | Descrição |
 | --- | --- |
 | `status` | Status HTTP |
-| `code` | CÃ³digo de erro da API (quando houver) |
-| `message` | Mensagem legÃ­vel |
+| `code` | Código de erro da API (quando houver) |
+| `message` | Mensagem legível |
 | `body` | Body parseado |
 | `retryAfterSeconds` | Do header `Retry-After` |
 | `isRateLimited` | `status === 429` |
 | `isUnauthorized` | `401` / `403` |
 | `isNotFound` | `404` |
 
-## PrÃ³ximos passos
+## Links
+
+- npm: [`@hyzecloud/sdk`](https://www.npmjs.com/package/@hyzecloud/sdk)
+- Código: [github.com/Hyze-Cloud/hyzecloud-sdk-ts](https://github.com/Hyze-Cloud/hyzecloud-sdk-ts)
+- [Referência da API](/api-reference/introduction)
+- [Rate limits](/pt/concepts/rate-limits)
+
+## Próximos passos
 
 <CardGroup cols={2}>
-  <Card title="AutenticaÃ§Ã£o" icon="key" href="/pt/getting-started/authentication">
+  <Card title="Autenticação" icon="key" href="/pt/getting-started/authentication">
     Como funcionam as API keys.
   </Card>
-  <Card title="ReferÃªncia da API" icon="book-open" href="/api-reference/introduction">
-    Todos os endpoints.
+  <Card title="Deploy de app" icon="rocket" href="/pt/guides/deploy-an-app">
+    Guia de deploy via ZIP.
   </Card>
-  <Card title="Rate limits" icon="gauge-high" href="/pt/concepts/rate-limits">
-    Limites da API e do proxy.
+  <Card title="Provisionar database" icon="database" href="/pt/guides/provision-a-database">
+    Criar bancos gerenciados.
   </Card>
-  <Card title="Exemplos" icon="code" href="/pt/examples/app-with-database">
-    Fluxo app + database.
+  <Card title="Referência da API" icon="book-open" href="/api-reference/introduction">
+    Todos os endpoints REST.
   </Card>
 </CardGroup>

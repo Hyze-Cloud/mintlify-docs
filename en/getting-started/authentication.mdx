@@ -1,19 +1,21 @@
 ---
 title: Authentication
-description: Authenticate API requests with a Hyze Cloud API key.
+description: Authenticate Hyze Cloud API requests with a Bearer API key.
 ---
 
-Use an API key when you call Hyze Cloud from CI, servers, scripts, or internal tools.
+Private endpoints require an API key in the `Authorization` header.
 
-## Goal
+```http
+Authorization: Bearer hyze_your_key
+```
 
-Send an authenticated request to the Hyze Cloud API.
+## Create a key
 
-## When to use
+1. Open [app.hyze.cloud](https://app.hyze.cloud)
+2. **Settings → API Keys → Create Key**
+3. Copy the secret once (`hyze_...`)
 
-Use API keys for server-side integrations.
-
-Do not expose API keys in browser code.
+Keys are bound to a **workspace**. Requests use that workspace’s resources.
 
 ## Example
 
@@ -22,25 +24,24 @@ curl https://api.hyzecloud.com/api/apps/ \
   -H "Authorization: Bearer hyze_your_key"
 ```
 
-## How it works
+With the SDK, pass the key once:
 
-Every private endpoint reads the API key from the `Authorization` header.
+```ts
+import { HyzeCloud } from "@hyzecloud/sdk";
 
-```http
-Authorization: Bearer hyze_your_key
+const hyze = new HyzeCloud({
+  apiKey: process.env.HYZE_API_KEY,
+});
 ```
 
-<Tip>
-  Store the key in an environment variable like `HYZE_API_KEY`.
-</Tip>
+## Best practices
 
-## Next steps
+- Store keys in env vars (`HYZE_API_KEY`), never in source or client-side code
+- Use one key per environment or automation (CI, local, production tooling)
+- Revoke keys you no longer need
 
-<CardGroup cols={2}>
-  <Card title="Quickstart" icon="bolt" href="/en/quickstart">
-    Make your first request and verify your setup.
-  </Card>
-  <Card title="API keys" icon="key" href="/api-reference/api-keys">
-    Create, update, and revoke API keys.
-  </Card>
-</CardGroup>
+## Related
+
+- [Quickstart](/en/quickstart) — verify the key works  
+- [API keys endpoints](/api-reference/api-keys) — create and manage keys via API  
+- [Workspaces](/en/concepts/workspaces) — how multi-team access works  

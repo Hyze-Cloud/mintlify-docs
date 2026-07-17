@@ -1,33 +1,64 @@
 ---
-title: SDKs
-description: Clientes oficiais e recomendados para a API da Hyze Cloud.
+title: Visão geral
+description: Clientes oficiais da API Hyze Cloud — SDKs tipadas para Node.js, Bun e mais.
+keywords: ["Hyze Cloud", "SDK", "API client", "Node.js", "TypeScript", "Python"]
 ---
 
-SDKs deixam os fluxos da Hyze Cloud nativos no seu código — helpers tipados, erros consistentes e menos boilerplate.
+As SDKs oficiais encapsulam a REST API da Hyze Cloud com helpers tipados, erros consistentes e menos boilerplate.
 
-## Objetivo
-
-Escolher o caminho certo de integração.
-
-## Quando usar
-
-Use um SDK quando quiser helpers tipados, erros padronizados e menos código repetido.
+A API continua sendo a fonte da verdade. As SDKs cobrem as superfícies principais: apps, databases, API keys, invoices, GitHub e plans.
 
 ## Pacotes oficiais
 
-| Pacote | Runtime | Status |
-| --- | --- | --- |
-| [`@hyzecloud/sdk`](/pt/sdks/typescript) | Node.js 18+, Bun | Disponível |
+| Pacote | Runtime | Status | Docs |
+| --- | --- | --- | --- |
+| [`@hyzecloud/sdk`](/pt/sdks/typescript) | Node.js 18+, Bun | **Disponível** | [Guia](/pt/sdks/typescript) |
+| Python | Python 3.10+ | Em breve | — |
 
-A REST API continua sendo a fonte da verdade. A SDK cobre as superfícies principais (apps, databases, keys, invoices, GitHub, plans).
+## Instalação (Node / Bun)
+
+```bash
+npm install @hyzecloud/sdk
+# ou
+bun add @hyzecloud/sdk
+```
+
+```ts
+import { HyzeCloud } from "@hyzecloud/sdk";
+
+const hyze = new HyzeCloud({
+  apiKey: process.env.HYZE_API_KEY, // hyze_...
+});
+
+const { apps } = await hyze.apps.list();
+```
+
+## Quando usar uma SDK
+
+- Quer helpers tipados de request/response
+- Prefere `hyze.apps.restart(id)` em vez de `fetch` cru
+- Precisa de erros consistentes (`HyzeError`, rate limits)
+
+Use a [API Reference](/api-reference/introduction) (ou curl) quando quiser controle total ou uma linguagem sem SDK ainda.
+
+## Código e npm
+
+- npm: [`@hyzecloud/sdk`](https://www.npmjs.com/package/@hyzecloud/sdk)
+- GitHub: [Hyze-Cloud/hyzecloud-sdk-ts](https://github.com/Hyze-Cloud/hyzecloud-sdk-ts)
 
 ## Próximos passos
 
 <CardGroup cols={2}>
   <Card title="TypeScript / Node / Bun" icon="code" href="/pt/sdks/typescript">
-    Instale @hyzecloud/sdk e chame a API.
+    Guia completo do @hyzecloud/sdk.
+  </Card>
+  <Card title="Autenticação" icon="key" href="/pt/getting-started/authentication">
+    Criar e usar API keys.
   </Card>
   <Card title="Referência da API" icon="book-open" href="/api-reference/introduction">
-    Veja os endpoints.
+    Todos os endpoints REST.
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/pt/quickstart">
+    Primeiro deploy em minutos.
   </Card>
 </CardGroup>

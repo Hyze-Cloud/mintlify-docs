@@ -1,46 +1,9 @@
 ---
-title: TypeScript
-description: Call the Hyze Cloud API from TypeScript with a small typed helper.
+title: TypeScript / Node / Bun
+description: Official @hyzecloud/sdk for Node.js and Bun.
 ---
 
-Use this pattern when you want a lightweight client without adding dependencies.
+See the full guide:
 
-## Goal
-
-Create a reusable API helper.
-
-## Example
-
-```ts
-const HYZE_API = "https://api.hyzecloud.com/api";
-
-async function hyze<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${HYZE_API}${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bearer ${process.env.HYZE_API_KEY}`,
-      "Content-Type": "application/json",
-      ...init?.headers,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error(`Hyze API failed: ${res.status}`);
-  }
-
-  return res.json() as Promise<T>;
-}
-
-const currentPlan = await hyze("/plans/current");
-```
-
-## Next steps
-
-<CardGroup cols={2}>
-  <Card title="Authentication" icon="key" href="/getting-started/authentication">
-    Learn how API keys work.
-  </Card>
-  <Card title="Examples" icon="code" href="/examples/app-with-database">
-    See a complete app and database flow.
-  </Card>
-</CardGroup>
+- English: [/en/sdks/typescript](/en/sdks/typescript)
+- Português: [/pt/sdks/typescript](/pt/sdks/typescript)

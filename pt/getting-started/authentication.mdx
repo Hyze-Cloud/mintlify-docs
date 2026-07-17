@@ -1,19 +1,21 @@
 ---
-title: AutenticaÃ§Ã£o
-description: Autentique requisiÃ§Ãµes Ã  API com uma chave de API da Hyze Cloud.
+title: Autenticação
+description: Autentique requisições da API Hyze Cloud com uma API key Bearer.
 ---
 
-Use uma chave de API quando chamar a Hyze Cloud a partir de CI, servidores, scripts ou ferramentas internas.
+Endpoints privados exigem uma API key no header `Authorization`.
 
-## Objetivo
+```http
+Authorization: Bearer hyze_sua_chave
+```
 
-Enviar uma requisiÃ§Ã£o autenticada para a API da Hyze Cloud.
+## Criar uma key
 
-## Quando usar
+1. Abra [app.hyze.cloud](https://app.hyze.cloud)
+2. **Settings → API Keys → Create Key**
+3. Copie o secret uma vez (`hyze_...`)
 
-Use chaves de API para integraÃ§Ãµes server-side.
-
-NÃ£o exponha chaves de API em cÃ³digo front-end.
+Keys ficam ligadas a um **workspace**. As requisições usam os recursos desse workspace.
 
 ## Exemplo
 
@@ -22,25 +24,24 @@ curl https://api.hyzecloud.com/api/apps/ \
   -H "Authorization: Bearer hyze_sua_chave"
 ```
 
-## Como funciona
+Com a SDK, passe a key uma vez:
 
-Todo endpoint privado lÃª a chave de API do header `Authorization`.
+```ts
+import { HyzeCloud } from "@hyzecloud/sdk";
 
-```http
-Authorization: Bearer hyze_sua_chave
+const hyze = new HyzeCloud({
+  apiKey: process.env.HYZE_API_KEY,
+});
 ```
 
-<Tip>
-  Armazene a chave em uma variÃ¡vel de ambiente como `HYZE_API_KEY`.
-</Tip>
+## Boas práticas
 
-## PrÃ³ximos passos
+- Guarde keys em variáveis de ambiente (`HYZE_API_KEY`), nunca no código ou no front-end
+- Use uma key por ambiente ou automação (CI, local, tooling de produção)
+- Revogue keys que não usa mais
 
-<CardGroup cols={2}>
-  <Card title="Quickstart" icon="bolt" href="/pt/quickstart">
-    FaÃ§a sua primeira requisiÃ§Ã£o e verifique sua configuraÃ§Ã£o.
-  </Card>
-  <Card title="Chaves de API" icon="key" href="/api-reference/api-keys">
-    Crie, atualize e revogue chaves de API.
-  </Card>
-</CardGroup>
+## Relacionado
+
+- [Quickstart](/pt/quickstart) — validar se a key funciona  
+- [Endpoints de API keys](/api-reference/api-keys) — criar e gerenciar via API  
+- [Workspaces](/pt/concepts/workspaces) — acesso multi-time  

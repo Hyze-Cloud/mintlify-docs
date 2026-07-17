@@ -1,66 +1,19 @@
 ---
-keywords: ["Hyze Cloud", "quickstart", "API", "primeira requisiÃ§Ã£o", "API key"]
 title: Quickstart
-description: FaÃ§a sua primeira requisiÃ§Ã£o Ã  API em menos de cinco minutos.
+description: Autentique e chame a API da Hyze Cloud em poucos minutos.
 ---
 
-Este guia leva vocÃª de uma conta nova no Dashboard atÃ© uma requisiÃ§Ã£o autenticada funcionando.
+Do zero até uma requisição autenticada funcionando.
 
-## Objetivo
+## 1. Criar uma API key
 
-Verificar se sua chave de API funciona.
+1. Abra [app.hyze.cloud](https://app.hyze.cloud)
+2. Vá em **Settings → API Keys → Create Key**
+3. Copie a chave (`hyze_...`) — ela só aparece uma vez
 
-## Quando usar
+## 2. Chamar a API
 
-Use isto antes de conectar a Hyze Cloud em CI/CD, scripts ou seu backend.
-
-## PrÃ©-requisitos
-
-Antes de comeÃ§ar, vocÃª precisa ter:
-
-- Uma conta na Hyze Cloud ([cadastre-se](https://app.hyze.cloud))
-- Uma chave de API (comeÃ§a com `hyze_`)
-
-<Callout type="info">
-  A URL base da API Ã© `https://api.hyzecloud.com/api`. Mantenha esse prefixo em todas as requisiÃ§Ãµes.
-</Callout>
-
-## Obter sua chave de API
-
-<Steps>
-  <Step title="Acesse o Dashboard">
-    VÃ¡ para [app.hyze.cloud](https://app.hyze.cloud) e faÃ§a login.
-  </Step>
-  <Step title="Navegue atÃ© API Keys">
-    Abra **Settings â†’ API Keys** e clique em **Create Key**.
-  </Step>
-  <Step title="Copie sua chave">
-    Sua chave comeÃ§a com `hyze_`. Copie-a â€” ela nÃ£o serÃ¡ mostrada novamente.
-  </Step>
-</Steps>
-
-## FaÃ§a sua primeira requisiÃ§Ã£o
-
-<Steps>
-  <Step title="Liste seus apps">
-    ```bash
-    curl https://api.hyzecloud.com/api/apps/ \
-      -H "Authorization: Bearer hyze_sua_chave"
-    ```
-
-    VocÃª deve receber uma resposta JSON com os apps do seu workspace.
-  </Step>
-</Steps>
-
-## O que acontece em seguida
-
-A API retorna seus apps atuais.
-
-Se esta requisiÃ§Ã£o funcionar, a autenticaÃ§Ã£o estÃ¡ configurada corretamente.
-
-## Verifique seu ambiente
-
-Use este trecho para confirmar que sua chave estÃ¡ disponÃ­vel antes de usÃ¡-la em CI/CD.
+Base URL: `https://api.hyzecloud.com/api`
 
 ```bash
 export HYZE_API_KEY="hyze_sua_chave"
@@ -69,17 +22,35 @@ curl https://api.hyzecloud.com/api/apps/ \
   -H "Authorization: Bearer $HYZE_API_KEY"
 ```
 
-## PrÃ³ximos passos
+Uma lista JSON de apps significa que a autenticação está ok.
+
+### Com a SDK
+
+```bash
+npm install @hyzecloud/sdk
+```
+
+```ts
+import { HyzeCloud } from "@hyzecloud/sdk";
+
+const hyze = new HyzeCloud({ apiKey: process.env.HYZE_API_KEY });
+const { apps } = await hyze.apps.list();
+console.log(apps);
+```
+
+## Próximo
 
 <CardGroup cols={2}>
-  <Card title="Fazer deploy de um app" icon="rocket" href="/pt/guides/deploy-an-app">
-    Crie seu primeiro app a partir de um arquivo ZIP ou repositÃ³rio GitHub.
+  <Card title="Deploy de app" icon="rocket" href="/pt/guides/deploy-an-app">
+    Publicar via ZIP ou GitHub.
   </Card>
-  <Card title="Provisionar um banco" icon="database" href="/pt/guides/provision-a-database">
-    Crie um banco de dados e copie a string de conexÃ£o para seu app.
+  <Card title="SDK Node.js" icon="code" href="/pt/sdks/typescript">
+    Guia completo da SDK.
+  </Card>
+  <Card title="Provisionar database" icon="database" href="/pt/guides/provision-a-database">
+    Criar PostgreSQL, MySQL, MongoDB ou Redis.
+  </Card>
+  <Card title="API Reference" icon="book-open" href="/api-reference/introduction">
+    Todos os endpoints.
   </Card>
 </CardGroup>
-
-<Tip>
-  Todos os endpoints usam autenticaÃ§Ã£o Bearer. Envie sua chave de API no header `Authorization`: `Bearer hyze_sua_chave`.
-</Tip>
