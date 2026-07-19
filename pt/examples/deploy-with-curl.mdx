@@ -20,8 +20,13 @@ curl -X POST https://api.hyzecloud.com/api/apps/deploy \
   -F "name=my-api" \
   -F "runtime=node" \
   -F "memoryMB=512" \
-  -F "startupCommand=npm start" \
   -F "exposePort=3000"
+```
+
+`startupCommand` é opcional. Omita (ou use `auto`) e a Hyze detecta o comando certo. Override só se precisar:
+
+```bash
+  -F "startupCommand=node server.js"
 ```
 
 ## Próximos passos

@@ -30,9 +30,10 @@ Use the Apps API when you want deployments from CI/CD, internal tooling, or your
       -F "name=my-api" \
       -F "runtime=node" \
       -F "memoryMB=512" \
-      -F "startupCommand=node server.js" \
       -F "exposePort=3000"
     ```
+
+    `startupCommand` is optional. Omit it (or pass `auto`) so Hyze detects the right start command. Override only when needed: `-F "startupCommand=node server.js"`.
   </Step>
   <Step title="Watch logs">
     ```bash
@@ -51,7 +52,6 @@ Use [`POST /api/apps/deploy-from-repo`](/api-reference/apps#deploy-from-github-r
   "name": "my-api",
   "runtime": "node",
   "memoryMB": 512,
-  "startupCommand": "npm start",
   "exposePort": 3000,
   "autoDeploy": true,
   "repository": {
@@ -65,15 +65,18 @@ Use [`POST /api/apps/deploy-from-repo`](/api-reference/apps#deploy-from-github-r
 
 <Tip>
   Set `autoDeploy` to `true` when you want Hyze Cloud to redeploy after pushes to the selected branch.
+  Omit `startupCommand` (or set `"auto"`) unless you need a custom start command.
 </Tip>
 
 ## Runtime checklist
 
-| Runtime | Typical startup command | Notes |
+| Runtime | Auto detect | Notes |
 | --- | --- | --- |
-| `node` | `node server.js` or `npm start` | Expose the same port your server listens on. |
-| `bun` | `bun run start` | Keep the lockfile in your artifact when possible. |
-| `python` | `python main.py` | Include your dependency file in the ZIP. |
+| `node` | Yes (API, static site, Vite, Next…) | Expose the same port your server listens on. |
+| `bun` | Yes | Keep the lockfile in your artifact when possible. |
+| `python` | Yes | Include your dependency file in the ZIP. |
+
+Optional override examples: `node server.js`, `bun run start`, `python main.py`.
 
 ## Related endpoints
 

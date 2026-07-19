@@ -300,8 +300,7 @@
                   "file",
                   "name",
                   "runtime",
-                  "memoryMB",
-                  "startupCommand"
+                  "memoryMB"
                 ],
                 "properties": {
                   "file": {
@@ -369,8 +368,7 @@
                   "file",
                   "name",
                   "runtime",
-                  "memoryMB",
-                  "startupCommand"
+                  "memoryMB"
                 ],
                 "properties": {
                   "file": {
@@ -438,8 +436,7 @@
                   "file",
                   "name",
                   "runtime",
-                  "memoryMB",
-                  "startupCommand"
+                  "memoryMB"
                 ],
                 "properties": {
                   "file": {
@@ -526,7 +523,6 @@
                   "name",
                   "runtime",
                   "memoryMB",
-                  "startupCommand",
                   "repository"
                 ],
                 "properties": {
@@ -632,7 +628,6 @@
                   "name",
                   "runtime",
                   "memoryMB",
-                  "startupCommand",
                   "repository"
                 ],
                 "properties": {
@@ -738,7 +733,6 @@
                   "name",
                   "runtime",
                   "memoryMB",
-                  "startupCommand",
                   "repository"
                 ],
                 "properties": {

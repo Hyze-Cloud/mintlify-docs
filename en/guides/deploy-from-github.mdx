@@ -23,7 +23,6 @@ curl -X POST https://api.hyzecloud.com/api/apps/deploy-from-repo \
     "name": "api",
     "runtime": "node",
     "memoryMB": 512,
-    "startupCommand": "npm start",
     "exposePort": 3000,
     "autoDeploy": true,
     "repository": {
@@ -36,7 +35,8 @@ curl -X POST https://api.hyzecloud.com/api/apps/deploy-from-repo \
 
 ## How it works
 
-Hyze Cloud pulls the selected branch, builds the app, and starts it with your `startupCommand`.
+Hyze Cloud pulls the selected branch, installs dependencies, and starts the app.  
+`startupCommand` is optional — omit it or set `"auto"` so Hyze detects the right command (Vite, Next, Node, static, Python…). Pass a custom command only when you need to override detection.
 
 <Tip>
   Enable `autoDeploy` when pushes to the branch should trigger new deployments.

@@ -20,10 +20,11 @@ Use apps para APIs, workers, dashboards, bots e serviços em background.
   "name": "api",
   "runtime": "node",
   "memoryMB": 512,
-  "startupCommand": "npm start",
   "exposePort": 3000
 }
 ```
+
+`startupCommand` é opcional. Omita (ou use `"auto"`) e a Hyze detecta como iniciar o app. Passe um comando custom só quando precisar sobrescrever a detecção.
 
 ## O que um app inclui
 

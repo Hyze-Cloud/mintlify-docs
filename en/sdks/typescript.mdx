@@ -106,13 +106,16 @@ await hyze.apps.deployFromZip({
   name: "my-api",
   runtime: "node", // "node" | "bun" | "python"
   memoryMB: 512,
-  startupCommand: "node server.js",
+  // startupCommand optional — omit or "auto" to let Hyze detect
   exposePort: 3000,
   subdomain: "my-api.hyzecloud.app",
   envVars: {
     APP_ENV: "production",
   },
 });
+
+// Custom start when you need full control:
+// await hyze.apps.deployFromZip({ ..., startupCommand: "node server.js" });
 ```
 
 ### Deploy from GitHub
@@ -122,7 +125,6 @@ await hyze.apps.deployFromRepo({
   name: "my-api",
   runtime: "bun",
   memoryMB: 512,
-  startupCommand: "bun run src/index.ts",
   exposePort: 3000,
   subdomain: "my-api.hyzecloud.app",
   repository: {

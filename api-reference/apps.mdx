@@ -56,7 +56,7 @@ Upload a ZIP file and deploy a new application.
 | `name` | `string` | Yes | App name |
 | `runtime` | `string` | Yes | `node` \| `bun` \| `python` |
 | `memoryMB` | `number` | Yes | Memory allocation (MB) |
-| `startupCommand` | `string` | Yes | Start command |
+| `startupCommand` | `string` | No | Start command. Omit or `"auto"` to let Hyze detect (Vite, Next, Node, static, Python…). |
 | `envVars` | `string (JSON)` | No | Environment variables |
 | `exposePort` | `number` | No | Port to expose |
 | `subdomain` | `string` | No | Custom subdomain |
@@ -71,7 +71,8 @@ curl -X POST https://api.hyzecloud.com/api/apps/deploy \
   -F "name=my-api" \
   -F "runtime=node" \
   -F "memoryMB=512" \
-  -F "startupCommand=node server.js"
+  -F "exposePort=3000"
+# optional: -F "startupCommand=node server.js"  (omit or use auto for detection)
 ```
 
 ---
@@ -89,7 +90,7 @@ Deploy from a connected GitHub repository.
 | `name` | `string` | Yes | App name |
 | `runtime` | `string` | Yes | `node` \| `bun` \| `python` |
 | `memoryMB` | `number` | Yes | Memory (MB) |
-| `startupCommand` | `string` | Yes | Start command |
+| `startupCommand` | `string` | No | Start command. Omit or `"auto"` to let Hyze detect (Vite, Next, Node, static, Python…). |
 | `envVars` | `string (JSON)` | No | Environment variables |
 | `exposePort` | `number` | No | Port to expose |
 | `subdomain` | `string` | No | Custom subdomain |
@@ -201,7 +202,7 @@ Updates app settings. When runtime-affecting fields change, the container is res
 | `name` | `string` | New name |
 | `runtime` | `string` | `node` \| `bun` \| `python` |
 | `memoryMB` | `number` | Memory (MB) |
-| `startupCommand` | `string` | Start command |
+| `startupCommand` | `string` | Start command (`"auto"` or custom). Optional on create. |
 | `exposePort` | `number \| null` | Port to expose |
 | `subdomain` | `string \| null` | Custom subdomain |
 | `autoRestart` | `boolean` | Auto-restart on crash |
